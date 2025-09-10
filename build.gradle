@@ -2,6 +2,14 @@ plugins {
     id 'java'
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'io.github.itzispyder.Main'
+        )
+    }
+}
+
 group = 'io.github.itzispyder'
 version = '1.0-SNAPSHOT'
 
