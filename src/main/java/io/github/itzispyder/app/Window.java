@@ -37,6 +37,7 @@ public class Window extends JFrame {
         this.setSize(1000, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.setCursor(Cursor.CROSSHAIR_CURSOR);
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -54,7 +55,22 @@ public class Window extends JFrame {
                 mouse.moveTo(e.getX(), e.getY());
             }
         });
-        this.addWindowStateListener(e -> camera.updateBounds(Window.this));
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mouse.onClick(e.getButton(), 1);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mouse.onClick(e.getButton(), 0);
+            }
+        });
+        this.addWindowStateListener(e -> {
+            mouse.zero(Window.this);
+            mouse.syncCursor(Window.this);
+            camera.updateBounds(Window.this);
+        });
     }
 
     public JPanel getRenderPanel() {

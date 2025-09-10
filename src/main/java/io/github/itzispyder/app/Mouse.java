@@ -1,11 +1,25 @@
 package io.github.itzispyder.app;
 
+import io.github.itzispyder.render.SphereBullet;
+
+import java.awt.*;
+
+import static io.github.itzispyder.Main.camera;
+import static io.github.itzispyder.Main.world;
+
 public class Mouse {
 
     private int prevX, prevY, x, y, deltaX, deltaY;
 
     public Mouse() {
 
+    }
+
+    public void onClick(int button, int action) {
+        SphereBullet bullet = new SphereBullet(0.2);
+        bullet.position = camera.getPosition();
+        bullet.velocity = camera.getRotationVector().mul(3);
+        world.addEntity(bullet);
     }
 
     public void moveTo(int x, int y) {
@@ -21,6 +35,17 @@ public class Mouse {
 
     public void zero(Window window) {
         this.moveTo(window.getWidth() / 2, window.getHeight() / 2);
+        deltaX = deltaY = 0;
+    }
+
+    public void syncCursor(Window window) {
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(window.getX() + x, window.getY() + y);
+        }
+        catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public int pollDeltaX() {

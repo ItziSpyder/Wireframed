@@ -14,7 +14,7 @@ public class Camera {
     public float prevPitch, prevYaw, pitch, yaw;
 
     public Camera() {
-        this.focalLength = 0.04;
+        this.focalLength = 0.069;
         this.worldScale = 100;
         this.windowWidth = 0;
         this.windowHeight = 0;
@@ -28,13 +28,16 @@ public class Camera {
     }
 
     public void onTick() {
+        if (keyboard.paused)
+            return;
+
         prevPitch = pitch;
         prevYaw = yaw;
         prevPosition = position;
 
-        pitch -= mouse.pollDeltaY() * 0.5F;
+        pitch -= mouse.pollDeltaY() * 0.25F;
         pitch = (float) MathUtil.clamp(pitch, -45, 45);
-        yaw += mouse.pollDeltaX() * 0.5F;
+        yaw += mouse.pollDeltaX() * 0.25F;
 
         Vector movement = Vector.ZERO;
         if (keyboard.forward) {
@@ -73,7 +76,7 @@ public class Camera {
     }
 
     public Vector getRotationVector() {
-        return new Vector(pitch, yaw, 0).polar2vector();
+        return Quaternion.fromRotation(0, -yaw).transform(new Vector(0, 0, 1).normalize());
     }
 
     public Quaternion getRotation() {

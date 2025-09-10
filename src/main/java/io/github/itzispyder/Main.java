@@ -6,6 +6,7 @@ import io.github.itzispyder.app.Window;
 import io.github.itzispyder.math.Camera;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
+import io.github.itzispyder.render.Sphere;
 import io.github.itzispyder.render.Voxel;
 import io.github.itzispyder.render.WorldManager;
 
@@ -27,13 +28,15 @@ public class Main {
         camera = new Camera();
         camera.updateBounds(window);
         camera.setPosition(new Vector(0, 2, 0));
-        vertexBuffer = new VertexBuffer(4096 * 5);
+        vertexBuffer = new VertexBuffer(1024 * 45);
         world = new WorldManager();
+
+        world.addEntity(new Sphere(5));
 
         // mesh floor
         for (int x = -10; x <= 10; x++) {
             for (int z = -10; z <= 10; z++) {
-                world.getVoxels().add(new Voxel(new Vector(x, 0, z)));
+                world.addEntity(new Voxel(new Vector(x, 0, z)));
             }
         }
     }
@@ -45,6 +48,7 @@ public class Main {
     public static void onTick() {
         camera.onTick();
         keyboard.onTick();
+        world.onTick();
     }
 
     public static void onRender() {

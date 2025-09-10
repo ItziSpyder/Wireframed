@@ -3,17 +3,26 @@ package io.github.itzispyder.render;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 
-public class Voxel {
+public class Voxel extends Entity {
 
-    private Vector position;
     private int sideLength;
 
+    public Voxel() {
+        this(Vector.ZERO);
+    }
+
     public Voxel(Vector position) {
-        this.position = position.floor();
+        super(position.floor());
         this.sideLength = 1;
     }
 
-    public void render(VertexBuffer buf) {
+    @Override
+    public void onTick() {
+
+    }
+
+    @Override
+    public void render(VertexBuffer buf, float tickDelta) {
         int o = 0;
         int i = o + sideLength;
 

@@ -154,4 +154,8 @@ public class Vector {
     public double getZ() {
         return z;
     }
+
+    public Vector negate() {
+        return mul(-1);
+    }
 }
