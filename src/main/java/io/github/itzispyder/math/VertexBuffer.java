@@ -1,5 +1,7 @@
 package io.github.itzispyder.math;
 
+import io.github.itzispyder.util.MathUtil;
+
 import java.awt.*;
 
 public class VertexBuffer {
@@ -37,15 +39,19 @@ public class VertexBuffer {
             dest.vertex(buffer[i]);
     }
 
-    public void drawTo(Camera camera, Graphics graphics) {
+    public void drawTo(Camera camera, Graphics graphics, float tickDelta) {
         Graphics2D context = (Graphics2D) graphics;
         context.setColor(Color.WHITE);
+
+        Vector position = MathUtil.lerp(camera.prevPosition, camera.position, tickDelta);
+        Quaternion rotation = Quaternion.fromLerpRotation(camera.prevPitch, camera.pitch, camera.prevYaw, camera.yaw, tickDelta);
+        float focalLength = MathUtil.lerp(camera.focalLength, camera.focalLength - 0.069F, camera.fovAnimator.getProgressClamped());
 
         Vector v1, v2;
         for (int i = 0; i < size; i += 2) {
             int color = buffer[i].color;
-            v1 = camera.project(buffer[i]);
-            v2 = camera.project(buffer[i + 1]);
+            v1 = camera.project(buffer[i], position, rotation, focalLength);
+            v2 = camera.project(buffer[i + 1], position, rotation, focalLength);
             int a = color >> 24 & 0xFF;
             int r = color >> 16 & 0xFF;
             int g = color >> 8 & 0xFF;

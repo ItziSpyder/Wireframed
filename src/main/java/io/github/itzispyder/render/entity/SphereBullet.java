@@ -2,7 +2,6 @@ package io.github.itzispyder.render.entity;
 
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
-import io.github.itzispyder.util.MathUtil;
 
 import static io.github.itzispyder.Main.world;
 
@@ -27,7 +26,7 @@ public class SphereBullet extends Sphere {
 
     @Override
     public void render(VertexBuffer buf, float tickDelta) {
-        Vector position = MathUtil.lerp(this.getPrevPosition(), this.getPosition());
+        Vector position = this.getPosition(tickDelta);
         float radius = this.getRadius();
 
         for (int pitch = 0; pitch < 360; pitch += 30) {

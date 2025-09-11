@@ -31,8 +31,8 @@ public class Quaternion {
                 .mul(new Quaternion((float) Math.cos(pitch), (float) Math.sin(pitch), 0, 0));
     }
 
-    public static Quaternion fromLerpRotation(float prevPitch, float pitch, float prevYaw, float yaw) {
-        return fromRotation(MathUtil.lerp(prevPitch, pitch), MathUtil.lerp(prevYaw, yaw));
+    public static Quaternion fromLerpRotation(float prevPitch, float pitch, float prevYaw, float yaw, float tickDelta) {
+        return fromRotation(MathUtil.lerp(prevPitch, pitch, tickDelta), MathUtil.lerp(prevYaw, yaw, tickDelta));
     }
 
     public Vector transform(Vector v) {

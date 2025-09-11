@@ -9,16 +9,8 @@ public class MathUtil {
         return a + (b - a) * delta;
     }
 
-    public static float lerp(float a, float b) {
-        return lerp(a, b, Main.tickDelta());
-    }
-
     public static Vector lerp(Vector a, Vector b, float delta) {
         return a.add(b.sub(a).mul(delta));
-    }
-
-    public static Vector lerp(Vector a, Vector b) {
-        return lerp(a, b, Main.tickDelta());
     }
 
     public static float clamp(float val, float min, float max) {

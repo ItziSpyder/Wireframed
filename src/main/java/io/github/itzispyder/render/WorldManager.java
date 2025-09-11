@@ -1,6 +1,5 @@
 package io.github.itzispyder.render;
 
-import io.github.itzispyder.Main;
 import io.github.itzispyder.math.VertexBuffer;
 
 import java.util.ArrayList;
@@ -14,9 +13,9 @@ public class WorldManager {
         this.entities = new ArrayList<>();
     }
 
-    public void render(VertexBuffer buf) {
+    public void render(VertexBuffer buf, float tickDelta) {
         for (int i = entities.size() - 1; i >= 0; i--) {
-            entities.get(i).render(buf, Main.tickDelta());
+            entities.get(i).render(buf, tickDelta);
         }
     }
 

@@ -10,11 +10,12 @@ import static io.github.itzispyder.Main.mouse;
 
 public class Camera {
 
-    private float focalLength, worldScale;
+    private final float worldScale;
+    public float focalLength;
     private int windowWidth, windowHeight;
-    private Vector prevPosition, position;
+    public Vector prevPosition, position;
     public float prevPitch, prevYaw, pitch, yaw;
-    private final Animator fovAnimator;
+    public final Animator fovAnimator;
 
     public Camera() {
         this.focalLength = 0.15F;
@@ -49,12 +50,8 @@ public class Camera {
      * Converts 3d space to 2d space using a focalLength value
      * @return (x, y, z) -> (x, y)
      */
-    public Vector project(Vector vector) {
-        float focalLength = MathUtil.lerp(this.focalLength, this.focalLength - 0.069F, fovAnimator.getProgressClamped());
-        Vector position = MathUtil.lerp(prevPosition, this.position);
-        vector = Quaternion.fromLerpRotation(prevPitch, pitch, prevYaw, yaw)
-                .transform(vector.sub(position))
-                .mul(worldScale);
+    public Vector project(Vector vector, Vector position, Quaternion rotation, float focalLength) {
+        vector = rotation.transform(vector.sub(position)).mul(worldScale);
         float depth = (vector.z + focalLength) * 0.00025F;
         if (depth <= 0)
             depth = 0.000000000001F;
@@ -68,30 +65,6 @@ public class Camera {
 
     public Vector getRotationVector() {
         return Quaternion.fromRotationClient(pitch, yaw).transform(new Vector(0, 0, 1).normalize());
-    }
-
-    public void setFocalLength(float focalLength) {
-        this.focalLength = focalLength;
-    }
-
-    public float getFocalLength() {
-        return focalLength;
-    }
-
-    public void setWorldScale(float worldScale) {
-        this.worldScale = worldScale;
-    }
-
-    public float getWorldScale() {
-        return worldScale;
-    }
-
-    public Vector getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector position) {
-        this.position = position;
     }
 
     private static Vector getMovement() {

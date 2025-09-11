@@ -30,7 +30,7 @@ public class Main {
         window.open();
         camera = new Camera();
         camera.updateBounds(window);
-        camera.setPosition(new Vector(0, 2, 0));
+        camera.position = new Vector(0, 2, 0);
         vertexBuffer = new VertexBuffer(1024 * 100);
         world = new WorldManager();
 

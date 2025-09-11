@@ -1,5 +1,7 @@
 package io.github.itzispyder.app;
 
+import io.github.itzispyder.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -22,10 +24,12 @@ public class Window extends JFrame {
                 if (world == null)
                     return;
 
-                world.render(vertexBuffer);
+                float tickDelta = Main.tickDelta();
+
+                world.render(vertexBuffer, tickDelta);
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, this.getWidth(), this.getHeight());
-                vertexBuffer.drawTo(camera, g);
+                vertexBuffer.drawTo(camera, g, tickDelta);
                 Window.this.renderFps(g);
 
                 // update fps
@@ -90,6 +94,6 @@ public class Window extends JFrame {
         g.drawString("FPS: " + fps, x, y);
 
         y += 20;
-        g.drawString("Position: " + camera.getPosition().toStringFloored(), x, y);
+        g.drawString("Position: " + camera.position.toStringFloored(), x, y);
     }
 }
