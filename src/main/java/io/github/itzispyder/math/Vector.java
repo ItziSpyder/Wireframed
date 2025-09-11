@@ -162,4 +162,12 @@ public class Vector {
     public Vector negate() {
         return mul(-1);
     }
+
+    public Vector applyRandomization(float amplitude) {
+        return add(
+                (float) (amplitude * Math.random() * (Math.random() < 0.5 ? 1 : -1)),
+                (float) (amplitude * Math.random() * (Math.random() < 0.5 ? 1 : -1)),
+                (float) (amplitude * Math.random() * (Math.random() < 0.5 ? 1 : -1))
+        );
+    }
 }

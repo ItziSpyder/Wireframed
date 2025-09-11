@@ -18,7 +18,7 @@ public class Mouse {
     public void onClick(int button, int action) {
         SphereBullet bullet = new SphereBullet(0.2F);
         bullet.position = camera.getPosition();
-        bullet.velocity = camera.getRotationVector().mul(3);
+        bullet.velocity = camera.getRotationVector().mul(3).applyRandomization(0.1F);
         world.addEntity(bullet);
     }
 
