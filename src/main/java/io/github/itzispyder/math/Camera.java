@@ -54,8 +54,8 @@ public class Camera {
             depth = 0.000000000001F;
 
         return new Vector(
-             (vector.x * focalLength) / -depth + windowWidth / 2.0,
-             (vector.y * focalLength) / -depth + windowHeight / 2.0,
+             (vector.x * focalLength) / -depth + windowWidth * 0.5,
+             (vector.y * focalLength) / -depth + windowHeight * 0.5,
              0
         );
     }

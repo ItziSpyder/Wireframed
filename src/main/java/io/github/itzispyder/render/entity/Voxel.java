@@ -6,10 +6,42 @@ import io.github.itzispyder.render.Entity;
 
 public class Voxel extends Entity {
 
-    private int sideLength;
+    private float sideLength;
 
     public Voxel() {
         this(Vector.ZERO);
+    }
+
+    public static void buildVertices(VertexBuffer buf, Vector position, float sideLength, int color) {
+        float o = 0;
+        float i = o + sideLength;
+
+        buf.vertex(position.add(o, o, o), color);
+        buf.vertex(position.add(i, o, o), color);
+        buf.vertex(position.add(i, o, o), color);
+        buf.vertex(position.add(i, o, i), color);
+        buf.vertex(position.add(i, o, i), color);
+        buf.vertex(position.add(o, o, i), color);
+        buf.vertex(position.add(o, o, i), color);
+        buf.vertex(position.add(o, o, o), color);
+
+        buf.vertex(position.add(o, i, o), color);
+        buf.vertex(position.add(i, i, o), color);
+        buf.vertex(position.add(i, i, o), color);
+        buf.vertex(position.add(i, i, i), color);
+        buf.vertex(position.add(i, i, i), color);
+        buf.vertex(position.add(o, i, i), color);
+        buf.vertex(position.add(o, i, i), color);
+        buf.vertex(position.add(o, i, o), color);
+
+        buf.vertex(position.add(o, o, o), color);
+        buf.vertex(position.add(o, i, o), color);
+        buf.vertex(position.add(i, o, o), color);
+        buf.vertex(position.add(i, i, o), color);
+        buf.vertex(position.add(i, o, i), color);
+        buf.vertex(position.add(i, i, i), color);
+        buf.vertex(position.add(o, o, i), color);
+        buf.vertex(position.add(o, i, i), color);
     }
 
     public Voxel(Vector position) {
@@ -24,42 +56,14 @@ public class Voxel extends Entity {
 
     @Override
     public void render(VertexBuffer buf, float tickDelta) {
-        int o = 0;
-        int i = o + sideLength;
-
-        buf.vertex(position.add(o, o, o));
-        buf.vertex(position.add(i, o, o));
-        buf.vertex(position.add(i, o, o));
-        buf.vertex(position.add(i, o, i));
-        buf.vertex(position.add(i, o, i));
-        buf.vertex(position.add(o, o, i));
-        buf.vertex(position.add(o, o, i));
-        buf.vertex(position.add(o, o, o));
-
-        buf.vertex(position.add(o, i, o));
-        buf.vertex(position.add(i, i, o));
-        buf.vertex(position.add(i, i, o));
-        buf.vertex(position.add(i, i, i));
-        buf.vertex(position.add(i, i, i));
-        buf.vertex(position.add(o, i, i));
-        buf.vertex(position.add(o, i, i));
-        buf.vertex(position.add(o, i, o));
-
-        buf.vertex(position.add(o, o, o));
-        buf.vertex(position.add(o, i, o));
-        buf.vertex(position.add(i, o, o));
-        buf.vertex(position.add(i, i, o));
-        buf.vertex(position.add(i, o, i));
-        buf.vertex(position.add(i, i, i));
-        buf.vertex(position.add(o, o, i));
-        buf.vertex(position.add(o, i, i));
+        buildVertices(buf, position, sideLength, 0xFFFFFFFF);
     }
 
     public void setSideLength(int sideLength) {
         this.sideLength = sideLength;
     }
 
-    public int getSideLength() {
+    public float getSideLength() {
         return sideLength;
     }
 }

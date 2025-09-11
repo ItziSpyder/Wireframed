@@ -55,7 +55,7 @@ public class Main {
 
         for (int i = 0; i < 360; i += 60) {
             Vector pos = new Vector(Math.cos(Math.toRadians(i)), 0, Math.sin(Math.toRadians(i)));
-            Tree tree = new Tree(pos.mul(10));
+            Tree tree = new Tree(pos.mul(20));
             world.addEntity(tree);
         }
 

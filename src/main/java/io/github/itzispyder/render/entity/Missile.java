@@ -32,7 +32,7 @@ public class Missile extends Entity {
             Entity ent = world.getEntities().get(i);
             if (!(ent instanceof SphereBullet bullet))
                 continue;
-            if (!bullet.isInRange(this, 5))
+            if (!bullet.isInRange(position.add(0, height * 0.5F, 0), 5))
                 continue;
             world.removeEntity(bullet);
             world.removeEntity(this);
