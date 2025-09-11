@@ -31,7 +31,7 @@ public class WorldManager {
 
         // spawn
         if (Math.random() < 0.05) {
-            Vector spawn = Vector.ZERO.applyRandomization(10).withY(45);
+            Vector spawn = Vector.ZERO.applyRandomization(20).withY(45);
             Missile missile = new Missile(spawn);
             missile.velocity = new Vector(0, -0.2F, 0);
             this.addEntity(missile);

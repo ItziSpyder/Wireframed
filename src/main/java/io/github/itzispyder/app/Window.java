@@ -31,6 +31,7 @@ public class Window extends JFrame {
                 g.fillRect(0, 0, this.getWidth(), this.getHeight());
                 vertexBuffer.drawTo(camera, g, tickDelta);
                 Window.this.renderFps(g);
+                vertexBuffer.clear();
 
                 // update fps
                 frame++;
@@ -111,5 +112,12 @@ public class Window extends JFrame {
 
         y += 20;
         g.drawString("Entities: " + world.getEntities().size(), x, y);
+
+        y += 20;
+        g.drawString("Vertex Buffer: " + vertexBuffer.getSize() + "/" + vertexBuffer.getCapacity(), x, y);
+
+        y += 20;
+        int usage = (int) (vertexBuffer.getSize() * 100.0 / vertexBuffer.getCapacity());
+        g.drawString("Buffer Usage: " + usage + "%", x, y);
     }
 }

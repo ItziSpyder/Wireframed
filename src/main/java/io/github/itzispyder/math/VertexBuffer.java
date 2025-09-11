@@ -34,6 +34,10 @@ public class VertexBuffer {
         return size;
     }
 
+    public int getCapacity() {
+        return buffer.length;
+    }
+
     public void uploadTo(VertexBuffer dest) {
         for (int i = 0; i < size; i++)
             dest.vertex(buffer[i]);
@@ -59,6 +63,5 @@ public class VertexBuffer {
             context.setColor(new Color(r, g, b, a));
             context.drawLine((int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y);
         }
-        this.clear();
     }
 }

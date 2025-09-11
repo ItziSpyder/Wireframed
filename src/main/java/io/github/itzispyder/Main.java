@@ -1,5 +1,6 @@
 package io.github.itzispyder;
 
+import io.github.itzispyder.ai_generated.entity.*;
 import io.github.itzispyder.app.Keyboard;
 import io.github.itzispyder.app.Mouse;
 import io.github.itzispyder.app.Window;
@@ -8,9 +9,7 @@ import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.StarBox;
 import io.github.itzispyder.render.WorldManager;
-import io.github.itzispyder.render.entity.Sphere;
-import io.github.itzispyder.render.entity.Tile;
-import io.github.itzispyder.render.entity.Voxel;
+import io.github.itzispyder.render.entity.*;
 
 public class Main {
 
@@ -51,6 +50,18 @@ public class Main {
         for (int x = floorSize + 1; x <= floorSize + 20; x++) {
             world.addEntity(new Voxel(new Vector(x, -1, 0)));
         }
+
+        for (int i = 0; i < 360; i += 60) {
+            Vector pos = new Vector(Math.cos(Math.toRadians(i)), 0, Math.sin(Math.toRadians(i)));
+            Tree tree = new Tree(pos.mul(10));
+            world.addEntity(tree);
+        }
+
+//        world.addEntity(new Humanoid(new Vector(0, 20, 0)));
+//        world.addEntity(new Lambo(new Vector(0, 10, 0)));
+//        world.addEntity(new WhiteHouseDetailed(new Vector(50, 0, 0)));
+        world.addEntity(new BoeingJumbo(new Vector(50, 30, 0)));
+        world.addEntity(new Humanoid(new Vector(49, 29, -33)));
     }
 
     public static float tickDelta() {
