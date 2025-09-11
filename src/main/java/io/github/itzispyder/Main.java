@@ -1,6 +1,5 @@
 package io.github.itzispyder;
 
-import io.github.itzispyder.ai_generated.entity.*;
 import io.github.itzispyder.app.Keyboard;
 import io.github.itzispyder.app.Mouse;
 import io.github.itzispyder.app.Window;
@@ -9,7 +8,10 @@ import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.StarBox;
 import io.github.itzispyder.render.WorldManager;
-import io.github.itzispyder.render.entity.*;
+import io.github.itzispyder.render.entity.Sphere;
+import io.github.itzispyder.render.entity.Tile;
+import io.github.itzispyder.render.entity.Tree;
+import io.github.itzispyder.render.entity.Voxel;
 
 public class Main {
 
@@ -57,11 +59,11 @@ public class Main {
             world.addEntity(tree);
         }
 
-//        world.addEntity(new Humanoid(new Vector(0, 20, 0)));
-//        world.addEntity(new Lambo(new Vector(0, 10, 0)));
-//        world.addEntity(new WhiteHouseDetailed(new Vector(50, 0, 0)));
-        world.addEntity(new BoeingJumbo(new Vector(50, 30, 0)));
-        world.addEntity(new Humanoid(new Vector(49, 29, -33)));
+        for (int i = 0; i < 20; i++) {
+            Vector pos = Vector.ZERO.applyRandomization(100).withY(0);
+            Tree tree = new Tree(pos);
+            world.addEntity(tree);
+        }
     }
 
     public static float tickDelta() {
