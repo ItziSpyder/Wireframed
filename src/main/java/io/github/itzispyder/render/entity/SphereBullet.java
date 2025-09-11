@@ -1,4 +1,4 @@
-package io.github.itzispyder.render;
+package io.github.itzispyder.render.entity;
 
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;

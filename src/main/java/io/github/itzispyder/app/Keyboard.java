@@ -1,6 +1,6 @@
 package io.github.itzispyder.app;
 
-import javax.swing.event.MenuKeyEvent;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,19 +10,22 @@ import static io.github.itzispyder.Main.window;
 public class Keyboard {
 
     private final Set<Integer> pressedKeys;
-    public boolean forward, backward, left, right, paused;
+    public boolean forward, backward, left, right, paused, ascend, descend;
+    public boolean accelerating;
 
     public Keyboard() {
         this.pressedKeys = new HashSet<>();
     }
 
     public void onTick() {
-        forward = backward = left = right = false;
+        forward = backward = left = right = ascend = descend = false;
         for (int key: pressedKeys) switch (key) {
-            case MenuKeyEvent.VK_W -> forward = true;
-            case MenuKeyEvent.VK_A -> left = true;
-            case MenuKeyEvent.VK_S -> backward = true;
-            case MenuKeyEvent.VK_D -> right = true;
+            case KeyEvent.VK_W -> forward = true;
+            case KeyEvent.VK_A -> left = true;
+            case KeyEvent.VK_S -> backward = true;
+            case KeyEvent.VK_D -> right = true;
+            case KeyEvent.VK_SHIFT -> descend = true;
+            case KeyEvent.VK_SPACE -> ascend = true;
         }
 
         if (!paused && window.isFocused()) {
@@ -32,12 +35,16 @@ public class Keyboard {
     }
 
     public void pressKey(int keycode) {
-        if (keycode == MenuKeyEvent.VK_ESCAPE)
+        if (keycode == KeyEvent.VK_ESCAPE)
             paused = !paused;
+        if (keycode == KeyEvent.VK_W)
+            accelerating = true;
         pressedKeys.add(keycode);
     }
 
     public void releaseKey(int keycode) {
+        if (keycode == KeyEvent.VK_W)
+            accelerating = false;
         pressedKeys.remove(keycode);
     }
 }

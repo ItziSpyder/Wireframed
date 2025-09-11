@@ -1,11 +1,10 @@
 package io.github.itzispyder.app;
 
-import io.github.itzispyder.render.SphereBullet;
+import io.github.itzispyder.render.entity.SphereBullet;
 
 import java.awt.*;
 
-import static io.github.itzispyder.Main.camera;
-import static io.github.itzispyder.Main.world;
+import static io.github.itzispyder.Main.*;
 
 public class Mouse {
 
@@ -16,10 +15,12 @@ public class Mouse {
     }
 
     public void onClick(int button, int action) {
-        SphereBullet bullet = new SphereBullet(0.2F);
-        bullet.position = camera.getPosition();
-        bullet.velocity = camera.getRotationVector().mul(3).applyRandomization(0.1F);
-        world.addEntity(bullet);
+        if (action == 0 && !keyboard.paused) {
+            SphereBullet bullet = new SphereBullet(0.2F);
+            bullet.position = camera.getPosition();
+            bullet.velocity = camera.getRotationVector().mul(3).applyRandomization(0.1F);
+            world.addEntity(bullet);
+        }
     }
 
     public void moveTo(int x, int y) {

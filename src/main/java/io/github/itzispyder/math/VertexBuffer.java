@@ -32,6 +32,11 @@ public class VertexBuffer {
         return size;
     }
 
+    public void uploadTo(VertexBuffer dest) {
+        for (int i = 0; i < size; i++)
+            dest.vertex(buffer[i]);
+    }
+
     public void drawTo(Camera camera, Graphics graphics) {
         Graphics2D context = (Graphics2D) graphics;
         context.setColor(Color.WHITE);

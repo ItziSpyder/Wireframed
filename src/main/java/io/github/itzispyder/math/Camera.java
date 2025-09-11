@@ -1,6 +1,8 @@
 package io.github.itzispyder.math;
 
 import io.github.itzispyder.app.Window;
+import io.github.itzispyder.math.animation.Animator;
+import io.github.itzispyder.math.animation.PollingAnimator;
 import io.github.itzispyder.util.MathUtil;
 
 import static io.github.itzispyder.Main.keyboard;
@@ -12,6 +14,7 @@ public class Camera {
     private int windowWidth, windowHeight;
     private Vector prevPosition, position;
     public float prevPitch, prevYaw, pitch, yaw;
+    private final Animator fovAnimator;
 
     public Camera() {
         this.focalLength = 0.15F;
@@ -20,6 +23,7 @@ public class Camera {
         this.windowHeight = 0;
         this.position = Vector.ZERO;
         this.prevPosition = this.position;
+        this.fovAnimator = new PollingAnimator(150, () -> keyboard.accelerating);
     }
 
     public void updateBounds(Window window) {
@@ -36,23 +40,9 @@ public class Camera {
         prevPosition = position;
 
         pitch -= mouse.pollDeltaY() * 0.25F;
-        pitch = (float) MathUtil.clamp(pitch, -45, 45);
+        pitch = MathUtil.clamp(pitch, -45, 45);
         yaw += mouse.pollDeltaX() * 0.25F;
-
-        Vector movement = Vector.ZERO;
-        if (keyboard.forward) {
-            movement = movement.add(0, 0, 1);
-        }
-        if (keyboard.backward) {
-            movement = movement.add(0, 0, -1);
-        }
-        if (keyboard.left) {
-            movement = movement.add(1, 0, 0);
-        }
-        if (keyboard.right) {
-            movement = movement.add(-1, 0, 0);
-        }
-        position = position.add(Quaternion.fromRotation(0, -yaw).transform(movement.mul(0.25F)));
+        position = position.add(Quaternion.fromRotation(0, -yaw).transform(getMovement()));
     }
 
     /**
@@ -60,6 +50,7 @@ public class Camera {
      * @return (x, y, z) -> (x, y)
      */
     public Vector project(Vector vector) {
+        float focalLength = MathUtil.lerp(this.focalLength, this.focalLength - 0.069F, fovAnimator.getProgressClamped());
         Vector position = MathUtil.lerp(prevPosition, this.position);
         vector = Quaternion.fromLerpRotation(prevPitch, pitch, prevYaw, yaw)
                 .transform(vector.sub(position))
@@ -101,5 +92,28 @@ public class Camera {
 
     public void setPosition(Vector position) {
         this.position = position;
+    }
+
+    private static Vector getMovement() {
+        Vector movement = Vector.ZERO;
+        if (keyboard.forward) {
+            movement = movement.add(0, 0, 1);
+        }
+        if (keyboard.backward) {
+            movement = movement.add(0, 0, -1);
+        }
+        if (keyboard.left) {
+            movement = movement.add(1, 0, 0);
+        }
+        if (keyboard.right) {
+            movement = movement.add(-1, 0, 0);
+        }
+        if (keyboard.ascend) {
+            movement = movement.add(0, 1, 0);
+        }
+        if (keyboard.descend) {
+            movement = movement.add(0, -1, 0);
+        }
+        return movement.mul(0.3F);
     }
 }

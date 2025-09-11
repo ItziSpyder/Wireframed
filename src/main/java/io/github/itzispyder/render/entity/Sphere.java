@@ -1,7 +1,8 @@
-package io.github.itzispyder.render;
+package io.github.itzispyder.render.entity;
 
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
+import io.github.itzispyder.render.Entity;
 
 public class Sphere extends Entity {
 
@@ -14,7 +15,6 @@ public class Sphere extends Entity {
 
     @Override
     public void render(VertexBuffer buf, float tickDelta) {
-        Vector position = this.getPosition();
         for (int pitch = 0; pitch < 360; pitch += 30) {
             for (int yaw = 0; yaw < 180; yaw += 30) {
                 buf.vertex(position.add(new Vector(pitch, yaw, 0).polar2vector().mul(radius)));

@@ -6,9 +6,11 @@ import io.github.itzispyder.app.Window;
 import io.github.itzispyder.math.Camera;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
-import io.github.itzispyder.render.Sphere;
-import io.github.itzispyder.render.Voxel;
+import io.github.itzispyder.render.StarBox;
 import io.github.itzispyder.render.WorldManager;
+import io.github.itzispyder.render.entity.Sphere;
+import io.github.itzispyder.render.entity.Tile;
+import io.github.itzispyder.render.entity.Voxel;
 
 public class Main {
 
@@ -31,13 +33,18 @@ public class Main {
         vertexBuffer = new VertexBuffer(1024 * 45);
         world = new WorldManager();
 
+        world.addEntity(new StarBox());
         world.addEntity(new Sphere(5));
 
         // mesh floor
         for (int x = -10; x <= 10; x++) {
             for (int z = -10; z <= 10; z++) {
-                world.addEntity(new Voxel(new Vector(x, 0, z)));
+                world.addEntity(new Tile(new Vector(x, 0, z)));
             }
+        }
+
+        for (int x = 11; x <= 20; x++) {
+            world.addEntity(new Voxel(new Vector(x, -1, 0)));
         }
     }
 
