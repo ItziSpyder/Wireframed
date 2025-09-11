@@ -61,9 +61,12 @@ public class Main {
         if (keyboard.paused)
             return;
 
-        camera.onTick();
-        keyboard.onTick();
-        world.onTick();
+        try {
+            camera.onTick();
+            keyboard.onTick();
+            world.onTick();
+        }
+        catch (IndexOutOfBoundsException ignore) {}
     }
 
     public static void onRender() {

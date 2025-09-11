@@ -49,7 +49,7 @@ public class WorldManager {
             else if (mouse.left) {
                 SphereBullet bullet = new SphereBullet(0.1F);
                 bullet.position = camera.position;
-                bullet.velocity = camera.getRotationVector().mul(1).applyRandomization(0.2F);
+                bullet.velocity = camera.getRotationVector().mul(1).applyRandomization(0.15F);
                 world.addEntity(bullet);
             }
         }
