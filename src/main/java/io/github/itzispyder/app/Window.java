@@ -26,6 +26,10 @@ public class Window extends JFrame {
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, this.getWidth(), this.getHeight());
                 vertexBuffer.drawTo(camera, g);
+                Window.this.renderFps(g);
+
+                // update fps
+                frame++;
             }
         };
         this.renderPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
@@ -75,5 +79,17 @@ public class Window extends JFrame {
 
     public JPanel getRenderPanel() {
         return renderPanel;
+    }
+
+    private void renderFps(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("segoe", Font.PLAIN, 20));
+
+        int x = 10;
+        int y = 25;
+        g.drawString("FPS: " + fps, x, y);
+
+        y += 20;
+        g.drawString("Position: " + camera.getPosition().toStringFloored(), x, y);
     }
 }

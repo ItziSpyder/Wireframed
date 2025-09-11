@@ -144,7 +144,7 @@ public class Vector {
     }
 
     public String toStringFloored() {
-        return this.floor().toString();
+        return "<" + (int)x + ", " + (int)y + ", " + (int)z + ">";
     }
 
     public float getX() {

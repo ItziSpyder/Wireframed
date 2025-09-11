@@ -11,7 +11,7 @@ public class StarBox extends Entity {
         super();
 
         this.stars = new VertexBuffer(2593);
-        float radius = 100;
+        float radius = 1000;
 
         for (int pitch = 0; pitch < 360; pitch += 10)
             for (int yaw = 0; yaw < 180; yaw += 10)
@@ -27,8 +27,8 @@ public class StarBox extends Entity {
     }
 
     private void plot(VertexBuffer buf, Vector position) {
-        position = position.applyRandomization(10);
+        position = position.applyRandomization(100);
         buf.vertex(position);
-        buf.vertex(position.applyRandomization(0.2F));
+        buf.vertex(position.applyRandomization(1));
     }
 }

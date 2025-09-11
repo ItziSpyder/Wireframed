@@ -1,25 +1,26 @@
 package io.github.itzispyder.app;
 
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.github.itzispyder.Main.mouse;
 import static io.github.itzispyder.Main.window;
 
 public class Keyboard {
 
-    private final Set<Integer> pressedKeys;
+    private final List<Integer> pressedKeys;
     public boolean forward, backward, left, right, paused, ascend, descend;
     public boolean accelerating;
 
     public Keyboard() {
-        this.pressedKeys = new HashSet<>();
+        this.pressedKeys = new ArrayList<>();
     }
 
     public void onTick() {
         forward = backward = left = right = ascend = descend = false;
-        for (int key: pressedKeys) switch (key) {
+
+        for (int i = pressedKeys.size() - 1; i >= 0; i--) switch (pressedKeys.get(i)) {
             case KeyEvent.VK_W -> forward = true;
             case KeyEvent.VK_A -> left = true;
             case KeyEvent.VK_S -> backward = true;
@@ -35,6 +36,8 @@ public class Keyboard {
     }
 
     public void pressKey(int keycode) {
+        if (pressedKeys.contains(keycode))
+            return;
         if (keycode == KeyEvent.VK_ESCAPE)
             paused = !paused;
         if (keycode == KeyEvent.VK_W)
@@ -45,6 +48,6 @@ public class Keyboard {
     public void releaseKey(int keycode) {
         if (keycode == KeyEvent.VK_W)
             accelerating = false;
-        pressedKeys.remove(keycode);
+        pressedKeys.remove((Object) keycode);
     }
 }

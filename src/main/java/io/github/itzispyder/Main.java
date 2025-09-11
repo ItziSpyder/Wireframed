@@ -15,12 +15,13 @@ import io.github.itzispyder.render.entity.Voxel;
 public class Main {
 
     public static Window window;
-    public static long time;
+    public static long time, nextFrameTime;
     public static Camera camera;
     public static Keyboard keyboard;
     public static Mouse mouse;
     public static VertexBuffer vertexBuffer;
     public static WorldManager world;
+    public static int fps, frame;
 
     private static void init() {
         keyboard = new Keyboard();
@@ -30,20 +31,22 @@ public class Main {
         camera = new Camera();
         camera.updateBounds(window);
         camera.setPosition(new Vector(0, 2, 0));
-        vertexBuffer = new VertexBuffer(1024 * 45);
+        vertexBuffer = new VertexBuffer(1024 * 100);
         world = new WorldManager();
 
         world.addEntity(new StarBox());
         world.addEntity(new Sphere(5));
 
         // mesh floor
-        for (int x = -10; x <= 10; x++) {
-            for (int z = -10; z <= 10; z++) {
+        int floorSize = 10;
+
+        for (int x = -floorSize; x <= floorSize; x++) {
+            for (int z = -floorSize; z <= floorSize; z++) {
                 world.addEntity(new Tile(new Vector(x, 0, z)));
             }
         }
 
-        for (int x = 11; x <= 20; x++) {
+        for (int x = floorSize + 1; x <= floorSize + 20; x++) {
             world.addEntity(new Voxel(new Vector(x, -1, 0)));
         }
     }
@@ -68,12 +71,19 @@ public class Main {
     }
 
     private static void startGameLoop() {
-        time = System.currentTimeMillis();
+        time = nextFrameTime = System.currentTimeMillis();
         while (window.isVisible()) {
-            if (System.currentTimeMillis() >= time) {
+            long sysTime = System.currentTimeMillis();
+            if (sysTime >= time) {
                 time += 50;
                 onTick();
             }
+            if (sysTime >= nextFrameTime) {
+                nextFrameTime += 1000;
+                fps = frame;
+                frame = 0;
+            }
+
             onRender();
         }
     }
