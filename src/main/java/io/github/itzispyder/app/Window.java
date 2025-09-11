@@ -28,6 +28,7 @@ public class Window extends JFrame {
                 vertexBuffer.drawTo(camera, g);
             }
         };
+        this.renderPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         this.renderPanel.setBackground(Color.BLACK);
         this.renderPanel.setDoubleBuffered(false);
         this.add(renderPanel);
@@ -37,7 +38,6 @@ public class Window extends JFrame {
         this.setSize(1000, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        this.setCursor(Cursor.CROSSHAIR_CURSOR);
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {

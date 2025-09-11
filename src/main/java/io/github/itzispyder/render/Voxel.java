@@ -54,14 +54,6 @@ public class Voxel extends Entity {
         buf.vertex(position.add(o, i, i));
     }
 
-    public Vector getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector position) {
-        this.position = position;
-    }
-
     public void setSideLength(int sideLength) {
         this.sideLength = sideLength;
     }

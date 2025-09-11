@@ -5,9 +5,9 @@ import io.github.itzispyder.math.VertexBuffer;
 
 public class Sphere extends Entity {
 
-    private final double radius;
+    private final float radius;
 
-    public Sphere(double radius) {
+    public Sphere(float radius) {
         super();
         this.radius = radius;
     }
@@ -29,7 +29,7 @@ public class Sphere extends Entity {
         }
     }
 
-    public double getRadius() {
+    public float getRadius() {
         return radius;
     }
 }

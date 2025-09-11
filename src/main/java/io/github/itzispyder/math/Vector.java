@@ -4,12 +4,16 @@ public class Vector {
 
     public static final Vector ZERO = new Vector();
 
-    public final double x, y, z;
+    public final float x, y, z;
 
-    public Vector(double x, double y, double z) {
+    public Vector(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public Vector(double x, double y, double z) {
+        this((float)x, (float)y, (float)z);
     }
 
     private Vector() {
@@ -33,8 +37,8 @@ public class Vector {
      * @return (pitch, yaw, 0) ==> (x, y, z)
      */
     public Vector polar2vector() {
-        double pitch = Math.toRadians(this.x);
-        double yaw = Math.toRadians(this.y);
+        float pitch = (float) Math.toRadians(this.x);
+        float yaw = (float) Math.toRadians(this.y);
         return new Vector(
                 Math.cos(yaw) * Math.cos(pitch),
                 Math.sin(pitch),
@@ -42,35 +46,35 @@ public class Vector {
         );
     }
 
-    public double lengthSquared() {
+    public float lengthSquared() {
         return x * x + y * y + z * z;
     }
 
-    public double length() {
-        return Math.sqrt(this.lengthSquared());
+    public float length() {
+        return (float) Math.sqrt(this.lengthSquared());
     }
 
-    public Vector withX(double x) {
+    public Vector withX(float x) {
         return new Vector(x, y, z);
     }
 
-    public Vector withY(double y) {
+    public Vector withY(float y) {
         return new Vector(x, y, z);
     }
 
-    public Vector withZ(double z) {
+    public Vector withZ(float z) {
         return new Vector(x, y, z);
     }
 
-    public Vector with(double x, double y, double z) {
+    public Vector with(float x, float y, float z) {
         return new Vector(x, y, z);
     }
 
-    public Vector add(double x, double y, double z) {
+    public Vector add(float x, float y, float z) {
         return new Vector(this.x + x, this.y + y, this.z + z);
     }
 
-    public Vector add(double v) {
+    public Vector add(float v) {
         return add(v, v, v);
     }
 
@@ -78,11 +82,11 @@ public class Vector {
         return add(v.x, v.y, v.z);
     }
 
-    public Vector sub(double x, double y, double z) {
+    public Vector sub(float x, float y, float z) {
         return new Vector(this.x - x, this.y - y, this.z - z);
     }
 
-    public Vector sub(double v) {
+    public Vector sub(float v) {
         return sub(v, v, v);
     }
 
@@ -90,11 +94,11 @@ public class Vector {
         return sub(v.x, v.y, v.z);
     }
 
-    public Vector mul(double x, double y, double z) {
+    public Vector mul(float x, float y, float z) {
         return new Vector(this.x * x, this.y * y, this.z * z);
     }
 
-    public Vector mul(double v) {
+    public Vector mul(float v) {
         return mul(v, v, v);
     }
 
@@ -102,11 +106,11 @@ public class Vector {
         return mul(v.x, v.y, v.z);
     }
 
-    public Vector div(double x, double y, double z) {
+    public Vector div(float x, float y, float z) {
         return new Vector(this.x / x, this.y / y, this.z / z);
     }
 
-    public Vector div(double v) {
+    public Vector div(float v) {
         return div(v, v, v);
     }
 
@@ -143,15 +147,15 @@ public class Vector {
         return this.floor().toString();
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getZ() {
+    public float getZ() {
         return z;
     }
 

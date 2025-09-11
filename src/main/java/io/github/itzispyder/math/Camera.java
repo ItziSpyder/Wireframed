@@ -8,13 +8,13 @@ import static io.github.itzispyder.Main.mouse;
 
 public class Camera {
 
-    private double focalLength, worldScale;
+    private float focalLength, worldScale;
     private int windowWidth, windowHeight;
-    private Vector prevPosition, position, velocity;
+    private Vector prevPosition, position;
     public float prevPitch, prevYaw, pitch, yaw;
 
     public Camera() {
-        this.focalLength = 0.069;
+        this.focalLength = 0.15F;
         this.worldScale = 100;
         this.windowWidth = 0;
         this.windowHeight = 0;
@@ -64,9 +64,9 @@ public class Camera {
         vector = Quaternion.fromLerpRotation(prevPitch, pitch, prevYaw, yaw)
                 .transform(vector.sub(position))
                 .mul(worldScale);
-        double depth = (vector.z + focalLength) * 0.00025;
+        float depth = (vector.z + focalLength) * 0.00025F;
         if (depth <= 0)
-            depth = 0.000000000001;
+            depth = 0.000000000001F;
 
         return new Vector(
              (vector.x * focalLength) / -depth + windowWidth / 2.0,
@@ -76,26 +76,22 @@ public class Camera {
     }
 
     public Vector getRotationVector() {
-        return Quaternion.fromRotation(0, -yaw).transform(new Vector(0, 0, 1).normalize());
+        return Quaternion.fromRotationClient(pitch, yaw).transform(new Vector(0, 0, 1).normalize());
     }
 
-    public Quaternion getRotation() {
-        return Quaternion.fromRotation(pitch, yaw);
-    }
-
-    public void setFocalLength(double focalLength) {
+    public void setFocalLength(float focalLength) {
         this.focalLength = focalLength;
     }
 
-    public double getFocalLength() {
+    public float getFocalLength() {
         return focalLength;
     }
 
-    public void setWorldScale(double worldScale) {
+    public void setWorldScale(float worldScale) {
         this.worldScale = worldScale;
     }
 
-    public double getWorldScale() {
+    public float getWorldScale() {
         return worldScale;
     }
 

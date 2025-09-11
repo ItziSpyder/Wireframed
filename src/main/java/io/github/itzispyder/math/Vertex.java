@@ -4,11 +4,11 @@ public class Vertex extends Vector {
 
     public final int color;
 
-    public Vertex(double x, double y, double z) {
+    public Vertex(float x, float y, float z) {
         this(x, y, z, 0xFFFFFFFF);
     }
 
-    public Vertex(double x, double y, double z, int color) {
+    public Vertex(float x, float y, float z, int color) {
         super(x, y, z);
         this.color = color;
     }
