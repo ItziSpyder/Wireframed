@@ -49,4 +49,20 @@ public abstract class Entity {
     public Vector getPrevPosition() {
         return prevPosition;
     }
+
+    public float distTo(Entity ent) {
+        return ent.position.sub(this.position).length();
+    }
+
+    public float distTo(Vector v) {
+        return v.sub(this.position).length();
+    }
+
+    public boolean isInRange(Entity ent, float range) {
+        return distTo(ent) <= range;
+    }
+
+    public boolean isInRange(Vector v, float range) {
+        return distTo(v) <= range;
+    }
 }

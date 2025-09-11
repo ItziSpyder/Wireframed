@@ -34,6 +34,8 @@ public class Main {
         vertexBuffer = new VertexBuffer(1024 * 100);
         world = new WorldManager();
 
+        // map
+
         world.addEntity(new StarBox());
         world.addEntity(new Sphere(5));
 
@@ -56,6 +58,9 @@ public class Main {
     }
 
     public static void onTick() {
+        if (keyboard.paused)
+            return;
+
         camera.onTick();
         keyboard.onTick();
         world.onTick();

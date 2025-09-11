@@ -62,15 +62,28 @@ public class Window extends JFrame {
             public void mouseMoved(MouseEvent e) {
                 mouse.moveTo(e.getX(), e.getY());
             }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                mouse.moveTo(e.getX(), e.getY());
+            }
         });
         this.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
+                switch (e.getButton()) {
+                    case MouseEvent.BUTTON1 -> mouse.left = true;
+                    case MouseEvent.BUTTON3 -> mouse.right = true;
+                }
                 mouse.onClick(e.getButton(), 1);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                switch (e.getButton()) {
+                    case MouseEvent.BUTTON1 -> mouse.left = false;
+                    case MouseEvent.BUTTON3 -> mouse.right = false;
+                }
                 mouse.onClick(e.getButton(), 0);
             }
         });
@@ -95,5 +108,8 @@ public class Window extends JFrame {
 
         y += 20;
         g.drawString("Position: " + camera.position.toStringFloored(), x, y);
+
+        y += 20;
+        g.drawString("Entities: " + world.getEntities().size(), x, y);
     }
 }

@@ -1,9 +1,14 @@
 package io.github.itzispyder.render;
 
+import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
+import io.github.itzispyder.render.entity.Missile;
+import io.github.itzispyder.render.entity.SphereBullet;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.itzispyder.Main.*;
 
 public class WorldManager {
 
@@ -22,6 +27,31 @@ public class WorldManager {
     public void onTick() {
         for (int i = entities.size() - 1; i >= 0; i--) {
             entities.get(i).onTick();
+        }
+
+        // spawn
+        if (Math.random() < 0.05) {
+            Vector spawn = Vector.ZERO.applyRandomization(10).withY(45);
+            Missile missile = new Missile(spawn);
+            missile.velocity = new Vector(0, -0.2F, 0);
+            this.addEntity(missile);
+        }
+
+        // shoot
+        if (!keyboard.paused) {
+            if (mouse.right) {
+                SphereBullet bullet = new SphereBullet(0.1F);
+                bullet.position = camera.position;
+                bullet.velocity = camera.getRotationVector().mul(1);
+                bullet.gravity = true;
+                world.addEntity(bullet);
+            }
+            else if (mouse.left) {
+                SphereBullet bullet = new SphereBullet(0.1F);
+                bullet.position = camera.position;
+                bullet.velocity = camera.getRotationVector().mul(1).applyRandomization(0.2F);
+                world.addEntity(bullet);
+            }
         }
     }
 

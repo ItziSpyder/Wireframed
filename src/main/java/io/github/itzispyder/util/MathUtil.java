@@ -1,6 +1,5 @@
 package io.github.itzispyder.util;
 
-import io.github.itzispyder.Main;
 import io.github.itzispyder.math.Vector;
 
 public class MathUtil {

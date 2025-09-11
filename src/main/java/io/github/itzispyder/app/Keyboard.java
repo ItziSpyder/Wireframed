@@ -1,5 +1,6 @@
 package io.github.itzispyder.app;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class Keyboard {
 
     private final List<Integer> pressedKeys;
     public boolean forward, backward, left, right, paused, ascend, descend;
-    public boolean accelerating;
+    public boolean accelerating, fullScreen;
 
     public Keyboard() {
         this.pressedKeys = new ArrayList<>();
@@ -42,6 +43,10 @@ public class Keyboard {
             paused = !paused;
         if (keycode == KeyEvent.VK_W)
             accelerating = true;
+        if (keycode == KeyEvent.VK_F11) {
+            fullScreen = !fullScreen;
+            window.setExtendedState(fullScreen ? JFrame.MAXIMIZED_BOTH : JFrame.NORMAL);
+        }
         pressedKeys.add(keycode);
     }
 

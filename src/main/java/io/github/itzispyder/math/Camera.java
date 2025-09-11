@@ -33,9 +33,6 @@ public class Camera {
     }
 
     public void onTick() {
-        if (keyboard.paused)
-            return;
-
         prevPitch = pitch;
         prevYaw = yaw;
         prevPosition = position;
