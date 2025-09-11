@@ -23,13 +23,13 @@ public class SphereBullet extends Sphere {
             world.removeEntity(this);
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
             travel();
     }
 
     private void travel() {
         position = position.add(velocity);
-        velocity = velocity.mul(0.99F).sub(0, gravity ? 0.01F : 0, 0);
+        velocity = velocity.mul(0.99F).sub(0, gravity ? 0.001F : 0, 0);
     }
 
     @Override
