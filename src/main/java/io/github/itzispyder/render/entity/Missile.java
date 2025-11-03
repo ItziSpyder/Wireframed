@@ -3,6 +3,7 @@ package io.github.itzispyder.render.entity;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.Entity;
+import io.github.itzispyder.util.Trig;
 
 import static io.github.itzispyder.Main.world;
 
@@ -46,14 +47,13 @@ public class Missile extends Entity {
         Vector position = this.getPosition(tickDelta);
 
         for (float i = 0; i <= 360F; i += deltaTheta) {
-            float angle1 = (float) Math.toRadians(i);
-            float angle2 = (float) Math.toRadians(i + deltaTheta);
+            float i2 = i + deltaTheta;
 
             buf.vertex(position, 0xFFFFAAAA);
-            buf.vertex(position.add((float)Math.cos(angle1), height, (float)Math.sin(angle1)), 0xFFFFAAAA);
+            buf.vertex(position.add(Trig.cos(i), height, Trig.sin(i)), 0xFFFFAAAA);
 
-            buf.vertex(position.add((float)Math.cos(angle1), height, (float)Math.sin(angle1)), 0xFFFFAAAA);
-            buf.vertex(position.add((float)Math.cos(angle2), height, (float)Math.sin(angle2)), 0xFFFFAAAA);
+            buf.vertex(position.add(Trig.cos(i), height, Trig.sin(i)), 0xFFFFAAAA);
+            buf.vertex(position.add(Trig.cos(i2), height, Trig.sin(i2)), 0xFFFFAAAA);
         }
     }
 }

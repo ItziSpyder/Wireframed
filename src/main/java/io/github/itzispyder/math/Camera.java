@@ -40,7 +40,7 @@ public class Camera {
         pitch -= mouse.pollDeltaY() * 0.25F;
         pitch = MathUtil.clamp(pitch, -45, 45);
         yaw += mouse.pollDeltaX() * 0.25F;
-        position = position.add(Quaternion.fromRotation(0, -yaw).transform(getMovement()));
+        position = position.add(Quaternion.fromPitchYaw(0, -yaw).transform(getMovement()));
     }
 
     /**
@@ -61,7 +61,7 @@ public class Camera {
     }
 
     public Vector getRotationVector() {
-        return Quaternion.fromRotationClient(pitch, yaw).transform(new Vector(0, 0, 1).normalize());
+        return Quaternion.fromYawPitch(-pitch, -yaw).transform(new Vector(0, 0, 1).normalize());
     }
 
     private static Vector getMovement() {

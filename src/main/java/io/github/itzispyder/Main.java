@@ -12,6 +12,7 @@ import io.github.itzispyder.render.entity.Sphere;
 import io.github.itzispyder.render.entity.Tile;
 import io.github.itzispyder.render.entity.Tree;
 import io.github.itzispyder.render.entity.Voxel;
+import io.github.itzispyder.util.Trig;
 
 public class Main {
 
@@ -54,7 +55,7 @@ public class Main {
         }
 
         for (int i = 0; i < 360; i += 60) {
-            Vector pos = new Vector(Math.cos(Math.toRadians(i)), 0, Math.sin(Math.toRadians(i)));
+            Vector pos = new Vector(Trig.cos(i), 0, Trig.sin(i));
             Tree tree = new Tree(pos.mul(20));
             world.addEntity(tree);
         }

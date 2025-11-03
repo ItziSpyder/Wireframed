@@ -1,5 +1,7 @@
 package io.github.itzispyder.math;
 
+import io.github.itzispyder.util.Trig;
+
 public class Vector {
 
     public static final Vector ZERO = new Vector();
@@ -37,12 +39,10 @@ public class Vector {
      * @return (pitch, yaw, 0) ==> (x, y, z)
      */
     public Vector polar2vector() {
-        float pitch = (float) Math.toRadians(this.x);
-        float yaw = (float) Math.toRadians(this.y);
         return new Vector(
-                Math.cos(yaw) * Math.cos(pitch),
-                Math.sin(pitch),
-                Math.sin(yaw) * Math.cos(pitch)
+                Trig.cos(y) * Trig.cos(x),
+                Trig.sin(x),
+                Trig.sin(y) * Trig.cos(x)
         );
     }
 

@@ -1,6 +1,7 @@
 package io.github.itzispyder.math;
 
 import io.github.itzispyder.util.MathUtil;
+import io.github.itzispyder.util.Trig;
 
 public class Quaternion {
 
@@ -17,22 +18,42 @@ public class Quaternion {
         this(0, v.x, v.y, v.z);
     }
 
-    public static Quaternion fromRotation(float pitch, float yaw) {
-        pitch = (float) Math.toRadians(pitch);
-        yaw = (float) Math.toRadians(yaw);
-        return new Quaternion((float) Math.cos(pitch), (float) Math.sin(pitch), 0, 0)
-                .mul(new Quaternion((float) Math.cos(yaw), 0, (float) Math.sin(yaw), 0));
+    public static Quaternion fromPitchYaw(float pitch, float yaw) {
+        pitch *= 0.5F;
+        yaw *= 0.5F;
+
+        float cp = Trig.cos(pitch);
+        float cy = Trig.cos(yaw);
+        float sp = Trig.sin(pitch);
+        float sy = Trig.sin(yaw);
+
+        return new Quaternion(
+                cp * cy,
+                sp * cy,
+                cp * sy,
+                sp * sy
+        );
     }
 
-    public static Quaternion fromRotationClient(float pitch, float yaw) {
-        pitch = -(float) Math.toRadians(pitch);
-        yaw = -(float) Math.toRadians(yaw);
-        return new Quaternion((float) Math.cos(yaw), 0, (float) Math.sin(yaw), 0)
-                .mul(new Quaternion((float) Math.cos(pitch), (float) Math.sin(pitch), 0, 0));
+    public static Quaternion fromYawPitch(float pitch, float yaw) {
+        pitch *= 0.5F;
+        yaw *= 0.5F;
+
+        float cp = Trig.cos(pitch);
+        float cy = Trig.cos(yaw);
+        float sp = Trig.sin(pitch);
+        float sy = Trig.sin(yaw);
+
+        return new Quaternion(
+                cy * cp,
+                cy * sp,
+                sy * cp,
+                -sy * sp
+        );
     }
 
     public static Quaternion fromLerpRotation(float prevPitch, float pitch, float prevYaw, float yaw, float tickDelta) {
-        return fromRotation(MathUtil.lerp(prevPitch, pitch, tickDelta), MathUtil.lerp(prevYaw, yaw, tickDelta));
+        return fromPitchYaw(MathUtil.lerp(prevPitch, pitch, tickDelta), MathUtil.lerp(prevYaw, yaw, tickDelta));
     }
 
     public Vector transform(Vector v) {
