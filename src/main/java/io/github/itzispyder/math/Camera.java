@@ -38,7 +38,7 @@ public class Camera {
         prevPosition = position;
 
         pitch -= mouse.pollDeltaY() * 0.25F;
-        pitch = MathUtil.clamp(pitch, -45, 45);
+        pitch = MathUtil.clamp(pitch, -90, 90);
         yaw += mouse.pollDeltaX() * 0.25F;
         position = position.add(Quaternion.fromPitchYaw(0, -yaw).transform(getMovement()));
     }
