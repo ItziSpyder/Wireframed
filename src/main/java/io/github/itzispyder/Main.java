@@ -41,30 +41,7 @@ public class Main {
         world.addEntity(new StarBox());
         world.addEntity(new Sphere(5));
 
-        // mesh floor
-        int floorSize = 10;
-
-        for (int x = -floorSize; x <= floorSize; x++) {
-            for (int z = -floorSize; z <= floorSize; z++) {
-                world.addEntity(new Tile(new Vector(x, 0, z)));
-            }
-        }
-
-        for (int x = floorSize + 1; x <= floorSize + 20; x++) {
-            world.addEntity(new Voxel(new Vector(x, -1, 0)));
-        }
-
-        for (int i = 0; i < 360; i += 60) {
-            Vector pos = new Vector(Mth.cos(i), 0, Mth.sin(i));
-            Tree tree = new Tree(pos.mul(20));
-            world.addEntity(tree);
-        }
-
-        for (int i = 0; i < 20; i++) {
-            Vector pos = Vector.ZERO.applyRandomization(100).withY(0);
-            Tree tree = new Tree(pos);
-            world.addEntity(tree);
-        }
+        Gen.generateWorld(world, camera);
     }
 
     public static float tickDelta() {
