@@ -48,15 +48,13 @@ public class WorldManager {
         // shoot
         if (!keyboard.paused) {
             if (mouse.right) {
-                SphereBullet bullet = new SphereBullet(0.1F);
-                bullet.position = camera.position;
+                SphereBullet bullet = new SphereBullet(camera.position, 0.1F);
                 bullet.velocity = camera.getRotationVector().mul(1);
                 bullet.gravity = true;
                 world.addEntity(bullet);
             }
             else if (mouse.left) {
-                SphereBullet bullet = new SphereBullet(0.1F);
-                bullet.position = camera.position;
+                SphereBullet bullet = new SphereBullet(camera.position, 0.1F);
                 bullet.velocity = camera.getRotationVector().mul(1).applyRandomization(0.15F);
                 world.addEntity(bullet);
             }

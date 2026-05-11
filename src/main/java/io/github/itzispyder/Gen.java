@@ -4,9 +4,7 @@ import io.github.itzispyder.math.Camera;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.render.GraphFunction;
 import io.github.itzispyder.render.WorldManager;
-import io.github.itzispyder.render.entity.Tile;
 import io.github.itzispyder.render.entity.Tree;
-import io.github.itzispyder.render.entity.Voxel;
 import io.github.itzispyder.util.Mth;
 
 public class Gen {
@@ -19,21 +17,6 @@ public class Gen {
         world.addEntity(func);
 
         genTrees(world, camera);
-    }
-
-    private static void genFloor(WorldManager world, Camera camera) {
-        // mesh floor
-        int floorSize = 10;
-
-        for (int x = -floorSize; x <= floorSize; x++) {
-            for (int z = -floorSize; z <= floorSize; z++) {
-                world.addEntity(new Tile(new Vector(x, 0, z)));
-            }
-        }
-
-        for (int x = floorSize + 1; x <= floorSize + 20; x++) {
-            world.addEntity(new Voxel(new Vector(x, -1, 0)));
-        }
     }
 
     private static void genTrees(WorldManager world, Camera camera) {

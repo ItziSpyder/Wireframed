@@ -9,10 +9,6 @@ import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.StarBox;
 import io.github.itzispyder.render.WorldManager;
 import io.github.itzispyder.render.entity.Sphere;
-import io.github.itzispyder.render.entity.Tile;
-import io.github.itzispyder.render.entity.Tree;
-import io.github.itzispyder.render.entity.Voxel;
-import io.github.itzispyder.util.Mth;
 
 public class Main {
 
@@ -42,6 +38,8 @@ public class Main {
         world.addEntity(new Sphere(5));
 
         Gen.generateWorld(world, camera);
+
+        // crosshair
     }
 
     public static float tickDelta() {

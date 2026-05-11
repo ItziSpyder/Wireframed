@@ -25,19 +25,27 @@ public class Window extends JFrame {
                     return;
 
                 float tickDelta = Main.tickDelta();
+                int w = this.getWidth();
+                int h = this.getHeight();
 
                 world.render(vertexBuffer, tickDelta);
                 g.setColor(Color.BLACK);
-                g.fillRect(0, 0, this.getWidth(), this.getHeight());
+                g.fillRect(0, 0, w, h);
                 vertexBuffer.drawTo(camera, g, tickDelta);
                 Window.this.renderFps(g);
                 vertexBuffer.clear();
+
+                // crosshair cursor
+                int crossRad = 10;
+                g.setColor(Color.WHITE);
+                g.drawLine(w / 2, h / 2 - crossRad, w / 2, h / 2 + crossRad);
+                g.drawLine(w / 2 - crossRad, h / 2, w / 2 + crossRad, h / 2);
 
                 // update fps
                 frame++;
             }
         };
-        this.renderPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        this.renderPanel.setCursor(CustomCursor.CURSOR_INVISIBLE);
         this.renderPanel.setBackground(Color.BLACK);
         this.renderPanel.setDoubleBuffered(false);
         this.add(renderPanel);

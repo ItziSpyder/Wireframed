@@ -12,8 +12,8 @@ public class SphereBullet extends Sphere {
     public boolean gravity;
     public int color;
 
-    public SphereBullet(float radius) {
-        super(radius);
+    public SphereBullet(Vector position, float radius) {
+        super(position, radius);
         this.color = 0xFF00B7FF;
     }
 

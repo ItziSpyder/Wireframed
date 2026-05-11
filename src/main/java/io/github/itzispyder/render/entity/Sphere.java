@@ -9,9 +9,13 @@ public class Sphere extends Entity {
 
     private final float radius;
 
-    public Sphere(float radius) {
-        super();
+    public Sphere(Vector position, float radius) {
+        super(position);
         this.radius = radius;
+    }
+
+    public Sphere(float radius) {
+        this(Vector.ZERO, radius);
     }
 
     @Override
