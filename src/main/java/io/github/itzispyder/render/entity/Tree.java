@@ -3,7 +3,7 @@ package io.github.itzispyder.render.entity;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.Entity;
-import io.github.itzispyder.util.Trig;
+import io.github.itzispyder.util.Mth;
 
 public class Tree extends Entity {
 
@@ -35,14 +35,14 @@ public class Tree extends Entity {
             int iRand2 = (int)(8 * Math.random()) * 45;
             for (int i = 0; i < 360; i += 45) {
                 int i2 = i + 45;
-                Vector trunkPoint = position.add(Trig.cos(i) * trunkRadius, y, Trig.sin(i) * trunkRadius);
+                Vector trunkPoint = position.add(Mth.cos(i) * trunkRadius, y, Mth.sin(i) * trunkRadius);
 
                 buf.vertex(trunkPoint, colorTrunk);
-                buf.vertex(position.add(Trig.cos(i2) * trunkRadius, y, Trig.sin(i2) * trunkRadius), colorTrunk);
+                buf.vertex(position.add(Mth.cos(i2) * trunkRadius, y, Mth.sin(i2) * trunkRadius), colorTrunk);
 
                 if (y == 0) {
-                    buf.vertex(position.add(Trig.cos(i) * trunkRadius, 0, Trig.sin(i) * trunkRadius), colorTrunk);
-                    buf.vertex(position.add(Trig.cos(i) * (trunkRadius / 2), trunkHeight, Trig.sin(i) * (trunkRadius / 2)), colorTrunk);
+                    buf.vertex(position.add(Mth.cos(i) * trunkRadius, 0, Mth.sin(i) * trunkRadius), colorTrunk);
+                    buf.vertex(position.add(Mth.cos(i) * (trunkRadius / 2), trunkHeight, Mth.sin(i) * (trunkRadius / 2)), colorTrunk);
                 }
                 if ((i == iRand1 || i == iRand2) && y >= 5) {
                     this.bufferBranch(buf, trunkPoint);

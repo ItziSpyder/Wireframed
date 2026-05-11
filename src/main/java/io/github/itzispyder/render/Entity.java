@@ -2,7 +2,7 @@ package io.github.itzispyder.render;
 
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
-import io.github.itzispyder.util.MathUtil;
+import io.github.itzispyder.util.Mth;
 
 public abstract class Entity {
 
@@ -31,7 +31,7 @@ public abstract class Entity {
     }
 
     public Vector getPosition(float tickDelta) {
-        return MathUtil.lerp(prevPosition, position, tickDelta);
+        return Mth.lerp(prevPosition, position, tickDelta);
     }
 
     public void setPosition(Vector position) {

@@ -1,6 +1,6 @@
 package io.github.itzispyder.math.animation;
 
-import io.github.itzispyder.util.MathUtil;
+import io.github.itzispyder.util.Mth;
 
 public class Animator {
 
@@ -48,7 +48,7 @@ public class Animator {
     }
 
     public float getProgressClamped() {
-        return MathUtil.clamp(getProgress(), 0, 1);
+        return Mth.clamp(getProgress(), 0, 1);
     }
 
     public float getProgressReversed() {
@@ -56,7 +56,7 @@ public class Animator {
     }
 
     public float getProgressClampedReversed() {
-        return MathUtil.clamp(getProgressReversed(), 0, 1);
+        return Mth.clamp(getProgressReversed(), 0, 1);
     }
 
     public boolean isFinished() {

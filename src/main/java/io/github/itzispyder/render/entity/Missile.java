@@ -3,7 +3,7 @@ package io.github.itzispyder.render.entity;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.Entity;
-import io.github.itzispyder.util.Trig;
+import io.github.itzispyder.util.Mth;
 
 import static io.github.itzispyder.Main.world;
 
@@ -43,17 +43,17 @@ public class Missile extends Entity {
 
     @Override
     public void render(VertexBuffer buf, float tickDelta) {
-        float deltaTheta = 360F / sides;
+        float deltaTheta = Mth.TWO_PI / sides;
         Vector position = this.getPosition(tickDelta);
 
-        for (float i = 0; i <= 360F; i += deltaTheta) {
+        for (float i = 0; i <= Mth.TWO_PI; i += deltaTheta) {
             float i2 = i + deltaTheta;
 
             buf.vertex(position, 0xFFFFAAAA);
-            buf.vertex(position.add(Trig.cos(i), height, Trig.sin(i)), 0xFFFFAAAA);
+            buf.vertex(position.add(Mth.cos(i), height, Mth.sin(i)), 0xFFFFAAAA);
 
-            buf.vertex(position.add(Trig.cos(i), height, Trig.sin(i)), 0xFFFFAAAA);
-            buf.vertex(position.add(Trig.cos(i2), height, Trig.sin(i2)), 0xFFFFAAAA);
+            buf.vertex(position.add(Mth.cos(i), height, Mth.sin(i)), 0xFFFFAAAA);
+            buf.vertex(position.add(Mth.cos(i2), height, Mth.sin(i2)), 0xFFFFAAAA);
         }
     }
 }

@@ -1,6 +1,6 @@
 package io.github.itzispyder.math;
 
-import io.github.itzispyder.util.MathUtil;
+import io.github.itzispyder.util.Mth;
 
 import java.awt.*;
 
@@ -47,15 +47,22 @@ public class VertexBuffer {
         Graphics2D context = (Graphics2D) graphics;
         context.setColor(Color.WHITE);
 
-        Vector position = MathUtil.lerp(camera.prevPosition, camera.position, tickDelta);
-        Quaternion rotation = Quaternion.fromLerpRotation(camera.prevPitch, camera.pitch, camera.prevYaw, camera.yaw, tickDelta);
-        float focalLength = MathUtil.lerp(camera.focalLength, camera.focalLength - 0.069F, camera.fovAnimator.getProgressClamped());
+        Vector position = Mth.lerp(camera.prevPosition, camera.position, tickDelta);
+        Matrix rotation = Matrix.rotationFirstPerson(camera, tickDelta);
+        float focalLength = Mth.lerp(camera.focalLength, camera.focalLength - 0.069F, camera.fovAnimator.getProgressClamped());
 
         Vector v1, v2;
         for (int i = 0; i < size; i += 2) {
             int color = buffer[i].color;
-            v1 = camera.project(buffer[i], position, rotation, focalLength);
-            v2 = camera.project(buffer[i + 1], position, rotation, focalLength);
+
+            v1 = rotation.transform(buffer[i].sub(position));
+            v2 = rotation.transform(buffer[i + 1].sub(position));
+
+            if (v1.z < 0 || v2.z < 0)
+                continue;
+
+            v1 = camera.projectTransformedViewSpace(v1, focalLength);
+            v2 = camera.projectTransformedViewSpace(v2, focalLength);
             int a = color >> 24 & 0xFF;
             int r = color >> 16 & 0xFF;
             int g = color >> 8 & 0xFF;

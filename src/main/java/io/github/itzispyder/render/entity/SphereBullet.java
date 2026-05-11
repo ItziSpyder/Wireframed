@@ -2,6 +2,7 @@ package io.github.itzispyder.render.entity;
 
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
+import io.github.itzispyder.util.Mth;
 
 import static io.github.itzispyder.Main.world;
 
@@ -37,16 +38,17 @@ public class SphereBullet extends Sphere {
         Vector position = this.getPosition(tickDelta);
         float radius = this.getRadius();
 
-        for (int pitch = 0; pitch < 360; pitch += 60) {
-            for (int yaw = 0; yaw < 180; yaw += 60) {
+        float dTheta = Mth.PI / 3;
+        for (float pitch = 0; pitch < Mth.TWO_PI; pitch += dTheta) {
+            for (float yaw = 0; yaw < Mth.PI; yaw += dTheta) {
                 buf.vertex(position.add(new Vector(pitch, yaw, 0).polar2vector().mul(radius)), color);
-                buf.vertex(position.add(new Vector(pitch, yaw + 60, 0).polar2vector().mul(radius)), color);
+                buf.vertex(position.add(new Vector(pitch, yaw + dTheta, 0).polar2vector().mul(radius)), color);
             }
         }
-        for (int yaw = 0; yaw < 180; yaw += 60) {
-            for (int pitch = 0; pitch < 360; pitch += 60) {
+        for (float yaw = 0; yaw < Mth.PI; yaw += dTheta) {
+            for (float pitch = 0; pitch < Mth.TWO_PI; pitch += dTheta) {
                 buf.vertex(position.add(new Vector(pitch, yaw, 0).polar2vector().mul(radius)), color);
-                buf.vertex(position.add(new Vector(pitch + 60, yaw, 0).polar2vector().mul(radius)), color);
+                buf.vertex(position.add(new Vector(pitch + dTheta, yaw, 0).polar2vector().mul(radius)), color);
             }
         }
     }

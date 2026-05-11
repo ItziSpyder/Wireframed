@@ -1,6 +1,6 @@
 package io.github.itzispyder.math;
 
-import io.github.itzispyder.util.Trig;
+import io.github.itzispyder.util.Mth;
 
 public class Vector {
 
@@ -40,9 +40,9 @@ public class Vector {
      */
     public Vector polar2vector() {
         return new Vector(
-                Trig.cos(y) * Trig.cos(x),
-                Trig.sin(x),
-                Trig.sin(y) * Trig.cos(x)
+                Mth.cos(y) * Mth.cos(x),
+                Mth.sin(x),
+                Mth.sin(y) * Mth.cos(x)
         );
     }
 
