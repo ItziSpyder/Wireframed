@@ -1,6 +1,6 @@
 package io.github.itzispyder.math;
 
-public class Vertex extends Vector {
+public non-sealed class Vertex extends Vector implements VertexBufferEntry {
 
     public final int color;
 

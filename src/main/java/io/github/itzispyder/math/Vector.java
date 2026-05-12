@@ -74,6 +74,10 @@ public class Vector {
         return new Vector(this.x + x, this.y + y, this.z + z);
     }
 
+    public Vector add(double x, double y, double z) {
+        return new Vector(this.x + x, this.y + y, this.z + z);
+    }
+
     public Vector add(float v) {
         return add(v, v, v);
     }

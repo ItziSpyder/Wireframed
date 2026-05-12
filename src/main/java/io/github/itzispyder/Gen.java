@@ -10,9 +10,16 @@ import io.github.itzispyder.util.Mth;
 public class Gen {
 
     public static void generateWorld(WorldManager world, Camera camera) {
-        GraphFunction func = new GraphFunction(Vector.ZERO, -50, -10, 50, 10, 0.5, (x, z) -> {
+        GraphFunction func = new GraphFunction(Vector.ZERO, -50, -50, 50, 50, 1, (x, z) -> {
+            return Math.cos(0.01 * x * z);
+        }, 0x3000b7ff);
+        world.addEntity(func);
+    }
+
+    private static void genPillars(WorldManager world, Camera camera) {
+        GraphFunction func = new GraphFunction(new Vector(30, 30, 30), -50, -10, 50, 10, 1, (x, z) -> {
             return (1F / 23) * Math.pow(0.5 * z, 5) * Math.sin(0.5 * x);
-        }, 0xFFFFFFFF);
+        }, 0x30FFFFFF);
         world.addEntity(func);
     }
 
