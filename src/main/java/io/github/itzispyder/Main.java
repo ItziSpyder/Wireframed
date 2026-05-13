@@ -28,14 +28,15 @@ public class Main {
         window.open();
         camera = new Camera();
         camera.updateBounds(window);
-        camera.position = new Vector(0, 2, 0);
+        camera.position = Vector.ZERO;
         vertexBuffer = new VertexBuffer(1024 * 100);
         world = new WorldManager();
 
         // map
-
         world.addEntity(new StarBox());
         world.addEntity(new Sphere(5));
+        world.tile = Gen.GRAPH_PILLARS;
+        world.addEntity(world.tile);
 
         Gen.generateWorld(world, camera);
 

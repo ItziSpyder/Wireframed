@@ -1,6 +1,7 @@
 package io.github.itzispyder.render;
 
 import io.github.itzispyder.gameplay.AbilitiesHandler;
+import io.github.itzispyder.math.Camera;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.entity.Missile;
@@ -14,16 +15,28 @@ import static io.github.itzispyder.Main.keyboard;
 public class WorldManager {
 
     private final List<Entity> entities;
+    public GraphFunction tile;
 
     public WorldManager() {
         this.entities = new ArrayList<>();
     }
 
     public void render(VertexBuffer buf, float tickDelta) {
+        Entity entity;
         for (int i = entities.size() - 1; i >= 0; i--) {
-            entities.get(i).render(buf, tickDelta);
+            entity = entities.get(i);
+            entity.render(buf, tickDelta);
+
+//            this.renderTileStepSelection(buf, entity, camera);
         }
 //        this.renderSelection(buf, camera.position.add(camera.getRotationVector().mul(5)));
+    }
+
+    public void renderTileStepSelection(VertexBuffer buf, Entity entity, Camera camera) {
+        if (entity instanceof GraphFunction graph) {
+            Vector vector = (Vector) graph.getEntryAt(camera.position);
+            Voxel.buildVertices(buf, vector, 1, 0xFF00B7FF);
+        }
     }
 
     public void renderSelection(VertexBuffer buf, Vector v) {

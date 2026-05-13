@@ -5,17 +5,17 @@ import io.github.itzispyder.math.animation.Animator;
 import io.github.itzispyder.math.animation.PollingAnimator;
 import io.github.itzispyder.util.Mth;
 
-import static io.github.itzispyder.Main.keyboard;
-import static io.github.itzispyder.Main.mouse;
+import static io.github.itzispyder.Main.*;
 
 public class Camera {
 
     private final float worldScale;
     public float focalLength;
     private int windowWidth, windowHeight;
-    public Vector prevPosition, position;
+    public Vector prevPosition, position, eyePosition;
     public float prevPitch, prevYaw, pitch, yaw;
     public final Animator fovAnimator;
+    public float height;
 
     public Camera() {
         this.focalLength = 0.15F;
@@ -23,8 +23,10 @@ public class Camera {
         this.windowWidth = 0;
         this.windowHeight = 0;
         this.position = Vector.ZERO;
+        this.eyePosition = position.add(0, height, 0);
         this.prevPosition = this.position;
         this.fovAnimator = new PollingAnimator(150, () -> keyboard.accelerating);
+        this.height = 1.6F;
     }
 
     public void updateBounds(Window window) {
@@ -40,7 +42,24 @@ public class Camera {
         pitch -= mouse.pollDeltaY() * 0.15F;
         pitch = Mth.clamp(pitch, -90, 90);
         yaw += mouse.pollDeltaX() * 0.15F;
-        position = position.add(Matrix.ROT_Y(yaw * Mth.TO_RAD).transform(getMovement().mul(2F)));
+
+        Vector movement = getMovement();
+        position = position.add(Matrix.ROT_Y(yaw * Mth.TO_RAD).transform(movement.mul(2F)));
+        processFloorCollision(movement);
+        eyePosition = position.add(0, height, 0);
+    }
+
+    private void processFloorCollision(Vector movement) {
+        if (movement.x == 0 && movement.y == 0 && movement.z == 0)
+            return;
+        for (int i = 0; i < 10; i++) {
+            float yThis = position.y;
+            float yFloor = world.tile.getGraphPos(position).y;
+            if (yThis > yFloor)
+                position = position.add(0, -0.01, 0);
+            else if (yThis < yFloor && Math.abs(yThis - yFloor) < 0.5)
+                position = position.add(0, 0.01, 0);
+        }
     }
 
     /**

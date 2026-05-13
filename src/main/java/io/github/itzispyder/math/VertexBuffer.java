@@ -18,6 +18,10 @@ public class VertexBuffer {
             buffer[size++] = vertex;
     }
 
+    public VertexBufferEntry fetch(int index) {
+        return buffer[index];
+    }
+
     public void swap(VertexFormat format) {
         download(format);
     }
@@ -42,6 +46,10 @@ public class VertexBuffer {
         return buffer.length;
     }
 
+    public VertexBufferEntry[] getArray() {
+        return buffer;
+    }
+
     private void download(VertexBufferEntry entry) {
         if (entry != null)
             buffer[size++] = entry;
@@ -56,7 +64,7 @@ public class VertexBuffer {
         Graphics2D context = (Graphics2D) graphics;
         context.setColor(Color.WHITE);
 
-        Vector position = Mth.lerp(camera.prevPosition, camera.position, tickDelta);
+        Vector position = Mth.lerp(camera.prevPosition, camera.position, tickDelta).add(0, camera.height, 0);
         Matrix rotation = Matrix.rotationFirstPerson(camera, tickDelta);
         float focalLength = Mth.lerp(camera.focalLength, camera.focalLength - 0.069F, camera.fovAnimator.getProgressClamped());
 
