@@ -1,5 +1,6 @@
 package io.github.itzispyder.render;
 
+import io.github.itzispyder.math.Matrix;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.entity.Missile;
@@ -48,13 +49,13 @@ public class WorldManager {
         // shoot
         if (!keyboard.paused) {
             if (mouse.right) {
-                SphereBullet bullet = new SphereBullet(camera.position, 0.1F);
+                SphereBullet bullet = new SphereBullet(camera.position, Matrix.rotationThirdPerson(camera, 1), 0.25F);
                 bullet.velocity = camera.getRotationVector().mul(1);
                 bullet.gravity = true;
                 world.addEntity(bullet);
             }
             else if (mouse.left) {
-                SphereBullet bullet = new SphereBullet(camera.position, 0.1F);
+                SphereBullet bullet = new SphereBullet(camera.position, Matrix.rotationThirdPerson(camera, 1), 0.25F);
                 bullet.velocity = camera.getRotationVector().mul(1).applyRandomization(0.15F);
                 world.addEntity(bullet);
             }

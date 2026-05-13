@@ -7,6 +7,11 @@ import static io.github.itzispyder.util.Mth.sin;
 
 public class Matrix {
 
+    public static final Matrix IDENTITY = new Matrix(
+            1, 0, 0,
+            0, 1, 0,
+            0, 0, 1);
+
     public final float mx0, mx1, mx2;
     public final float my0, my1, my2;
     public final float mz0, mz1, mz2;

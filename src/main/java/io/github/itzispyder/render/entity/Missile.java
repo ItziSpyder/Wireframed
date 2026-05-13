@@ -1,5 +1,6 @@
 package io.github.itzispyder.render.entity;
 
+import io.github.itzispyder.math.Matrix;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.Entity;
@@ -12,11 +13,13 @@ public class Missile extends Entity {
     private final float height;
     private final int sides;
     private int age;
+    private Matrix rotation;
 
     public Missile(Vector position) {
         super(position);
         this.height = (float)(1 + Math.random() * 3);
         this.sides = 3 + (int)(Math.random() * 6);
+        this.rotation = Matrix.IDENTITY;
     }
 
     @Override
@@ -33,12 +36,13 @@ public class Missile extends Entity {
             Entity ent = world.getEntities().get(i);
             if (!(ent instanceof SphereBullet bullet))
                 continue;
-            if (!bullet.isInRange(position.add(0, height * 0.5F, 0), 5))
+            if (!bullet.isInRange(position.add(rotation.transform(new Vector(0, height * 0.5F, 0))), 5))
                 continue;
             world.removeEntity(bullet);
             world.removeEntity(this);
             break;
         }
+        rotation = Matrix.ROT_Y(age);
     }
 
     @Override
@@ -50,10 +54,10 @@ public class Missile extends Entity {
             float i2 = i + deltaTheta;
 
             buf.vertex(position, 0xFFFFAAAA);
-            buf.vertex(position.add(Mth.cos(i), height, Mth.sin(i)), 0xFFFFAAAA);
+            buf.vertex(position.add(rotation.transform(new Vector(Mth.cos(i), height, Mth.sin(i)))), 0xFFFFAAAA);
 
-            buf.vertex(position.add(Mth.cos(i), height, Mth.sin(i)), 0xFFFFAAAA);
-            buf.vertex(position.add(Mth.cos(i2), height, Mth.sin(i2)), 0xFFFFAAAA);
+            buf.vertex(position.add(rotation.transform(new Vector(Mth.cos(i), height, Mth.sin(i)))), 0xFFFFAAAA);
+            buf.vertex(position.add(rotation.transform(new Vector(Mth.cos(i2), height, Mth.sin(i2)))), 0xFFFFAAAA);
         }
     }
 }

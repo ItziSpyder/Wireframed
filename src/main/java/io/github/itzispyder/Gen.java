@@ -10,6 +10,11 @@ import io.github.itzispyder.util.Mth;
 public class Gen {
 
     public static void generateWorld(WorldManager world, Camera camera) {
+        genTurf(world, camera);
+        genTrees(world, camera);
+    }
+
+    private static void genWater(WorldManager world, Camera camera) {
         GraphFunction func = new GraphFunction(Vector.ZERO, -50, -50, 50, 50, 1, (x, z) -> {
             return Math.cos(0.01 * x * z);
         }, 0x3000b7ff);
