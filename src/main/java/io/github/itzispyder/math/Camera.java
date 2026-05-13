@@ -40,7 +40,7 @@ public class Camera {
         pitch -= mouse.pollDeltaY() * 0.15F;
         pitch = Mth.clamp(pitch, -90, 90);
         yaw += mouse.pollDeltaX() * 0.15F;
-        position = position.add(Matrix.ROT_Y(yaw * Mth.TO_RAD).transform(getMovement()));
+        position = position.add(Matrix.ROT_Y(yaw * Mth.TO_RAD).transform(getMovement().mul(2F)));
     }
 
     /**

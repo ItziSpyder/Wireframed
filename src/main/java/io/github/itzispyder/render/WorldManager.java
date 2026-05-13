@@ -1,16 +1,15 @@
 package io.github.itzispyder.render;
 
-import io.github.itzispyder.math.Matrix;
+import io.github.itzispyder.gameplay.AbilitiesHandler;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.entity.Missile;
-import io.github.itzispyder.render.entity.SphereBullet;
 import io.github.itzispyder.render.entity.Voxel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.itzispyder.Main.*;
+import static io.github.itzispyder.Main.keyboard;
 
 public class WorldManager {
 
@@ -48,17 +47,7 @@ public class WorldManager {
 
         // shoot
         if (!keyboard.paused) {
-            if (mouse.right) {
-                SphereBullet bullet = new SphereBullet(camera.position, Matrix.rotationThirdPerson(camera, 1), 0.25F);
-                bullet.velocity = camera.getRotationVector().mul(1);
-                bullet.gravity = true;
-                world.addEntity(bullet);
-            }
-            else if (mouse.left) {
-                SphereBullet bullet = new SphereBullet(camera.position, Matrix.rotationThirdPerson(camera, 1), 0.25F);
-                bullet.velocity = camera.getRotationVector().mul(1).applyRandomization(0.15F);
-                world.addEntity(bullet);
-            }
+            AbilitiesHandler.handleProjectiles();
         }
     }
 

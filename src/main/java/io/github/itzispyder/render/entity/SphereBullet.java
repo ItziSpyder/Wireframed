@@ -3,6 +3,7 @@ package io.github.itzispyder.render.entity;
 import io.github.itzispyder.math.Matrix;
 import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.math.VertexBuffer;
+import io.github.itzispyder.render.Entity;
 import io.github.itzispyder.util.Mth;
 
 import static io.github.itzispyder.Main.world;
@@ -12,12 +13,14 @@ public class SphereBullet extends Sphere {
     private int age;
     public boolean gravity;
     public int color;
-    private final Matrix rotation;
+    private final Matrix rotationInitial;
+    private Matrix rotation;
 
-    public SphereBullet(Vector position, Matrix rotation, float radius) {
+    public SphereBullet(Vector position, Matrix rotationInitial, float radius) {
         super(position, radius);
         this.color = 0xFF00B7FF;
-        this.rotation = rotation;
+        this.rotationInitial = rotationInitial;
+        this.rotation = rotationInitial;
     }
 
     public SphereBullet(Vector position, float radius) {
@@ -38,6 +41,21 @@ public class SphereBullet extends Sphere {
     private void travel() {
         position = position.add(velocity);
         velocity = velocity.mul(0.99F).sub(0, gravity ? 0.001F : 0, 0);
+        rotation = rotationInitial.mul(Matrix.ROT_X((age / 20F) * Mth.PI_OVER_TWO));
+        pollCollisionWithMissile();
+    }
+
+    private void pollCollisionWithMissile() {
+        for (int i = world.getEntities().size() - 1; i >= 0; i--) {
+            Entity entity = world.getEntities().get(i);
+            if (!(entity instanceof Missile missile))
+                continue;
+            if (!missile.isInRange(this, 2))
+                continue;
+
+            world.removeEntity(missile);
+            world.removeEntity(this);
+        }
     }
 
     @Override
@@ -63,7 +81,7 @@ public class SphereBullet extends Sphere {
     private Vector polar2vectorSpecial(float pitch, float yaw) {
         Vector cartesian = new Vector(
                 Mth.cos(yaw) * Mth.cos(pitch),
-                0.3 * Mth.sin(pitch),
+                0.1 * Mth.sin(pitch),
                 Mth.sin(yaw) * Mth.cos(pitch));
         return rotation.transform(cartesian);
     }

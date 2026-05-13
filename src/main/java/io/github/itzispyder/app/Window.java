@@ -4,10 +4,7 @@ import io.github.itzispyder.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import static io.github.itzispyder.Main.*;
 
@@ -94,6 +91,12 @@ public class Window extends JFrame {
                     case MouseEvent.BUTTON3 -> mouse.right = false;
                 }
                 mouse.onClick(e.getButton(), 0);
+            }
+        });
+        this.addMouseWheelListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                mouse.onScroll(e.getWheelRotation());
             }
         });
         this.addWindowStateListener(e -> {

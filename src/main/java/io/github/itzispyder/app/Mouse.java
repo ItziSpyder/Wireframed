@@ -1,5 +1,7 @@
 package io.github.itzispyder.app;
 
+import io.github.itzispyder.gameplay.AbilitiesHandler;
+
 import java.awt.*;
 
 public class Mouse {
@@ -13,6 +15,10 @@ public class Mouse {
 
     public void onClick(int button, int action) {
 
+    }
+
+    public void onScroll(int amount) {
+        AbilitiesHandler.handleDash(amount);
     }
 
     public void moveTo(int x, int y) {
