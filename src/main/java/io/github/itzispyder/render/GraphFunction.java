@@ -7,6 +7,8 @@ import java.util.function.BiFunction;
 
 public class GraphFunction extends Entity {
 
+    public static final int SEA_LEVEL = -256;
+
     private final VertexBuffer buf;
     private final BiFunction<Double, Double, Double> f;
     private final int minX, minZ, maxX, maxZ;
@@ -61,7 +63,7 @@ public class GraphFunction extends Entity {
         double localZ = worldZ - position.z;
 
         if (localX < minX || localX > maxX || localZ < minZ || localZ > maxZ)
-            return 0;
+            return SEA_LEVEL;
         return f.apply(localX, localZ).floatValue();
     }
 

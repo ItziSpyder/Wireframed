@@ -9,6 +9,7 @@ import io.github.itzispyder.math.VertexBuffer;
 import io.github.itzispyder.render.StarBox;
 import io.github.itzispyder.render.WorldManager;
 import io.github.itzispyder.render.entity.Sphere;
+import io.github.itzispyder.util.Mth;
 
 public class Main {
 
@@ -44,7 +45,7 @@ public class Main {
     }
 
     public static float tickDelta() {
-        return 1 - (time - System.currentTimeMillis()) / 50F;
+        return Mth.clamp(1 - (time - System.currentTimeMillis()) / 50F, 0, 1);
     }
 
     public static void onTick() {
