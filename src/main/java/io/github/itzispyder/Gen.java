@@ -18,6 +18,12 @@ public class Gen {
     public static final GraphFunction GRAPH_TURF = new GraphFunction(Vector.ZERO, -100, -100, 100, 100, 2, (x, z) -> {
         return Math.cos(0.1 * x) * Math.sin(0.1 * z);
     }, 0xFF02400c);
+    public static final GraphFunction GRAPH_RIPPLE = new GraphFunction(Vector.ZERO, -50, -50, 50, 50, 1, (x, z) -> {
+        return Math.cos(Math.sqrt(0.1 * x * x + 0.1 * z * z));
+    }, 0x3000b7ff);
+    public static final GraphFunction GRAPH_CUP = new GraphFunction(Vector.ZERO, -50, -50, 50, 50, 1, (x, z) -> {
+        return 0.015 * (x * x + z * z);
+    }, 0x3000b7ff);
 
     public static void generateWorld(WorldManager world, Camera camera) {
         genTrees(world, camera);

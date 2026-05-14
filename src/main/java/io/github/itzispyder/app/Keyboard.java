@@ -52,7 +52,7 @@ public class Keyboard {
             camera.velocity = Vector.ZERO;
         }
         if (keycode == KeyEvent.VK_R) {
-            GraphFunction[] graphs = {GRAPH_PILLARS, GRAPH_WATER, GRAPH_TURF};
+            GraphFunction[] graphs = {GRAPH_PILLARS, GRAPH_WATER, GRAPH_TURF, GRAPH_RIPPLE, GRAPH_CUP};
             world.removeEntity(world.tile);
             world.tile = graphs[++mapToggleIndex % graphs.length];
             world.addEntity(world.tile);
