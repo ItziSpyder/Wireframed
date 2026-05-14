@@ -11,7 +11,7 @@ import static io.github.itzispyder.Main.window;
 public class Keyboard {
 
     private final List<Integer> pressedKeys;
-    public boolean forward, backward, left, right, paused, ascend, descend;
+    public boolean forward, backward, left, right, paused, ascend, descend, fly;
     public boolean accelerating, fullScreen;
 
     public Keyboard() {
@@ -43,6 +43,8 @@ public class Keyboard {
             paused = !paused;
         if (keycode == KeyEvent.VK_W)
             accelerating = true;
+        if (keycode == KeyEvent.VK_K)
+            fly = !fly;
         if (keycode == KeyEvent.VK_F11) {
             fullScreen = !fullScreen;
             window.setExtendedState(fullScreen ? JFrame.MAXIMIZED_BOTH : JFrame.NORMAL);

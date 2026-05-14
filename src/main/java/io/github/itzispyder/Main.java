@@ -29,7 +29,7 @@ public class Main {
         camera = new Camera();
         camera.updateBounds(window);
         camera.position = Vector.ZERO;
-        vertexBuffer = new VertexBuffer(1024 * 100);
+        vertexBuffer = new VertexBuffer(1024 * 1024);
         world = new WorldManager();
 
         // map

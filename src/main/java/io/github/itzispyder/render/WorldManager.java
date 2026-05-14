@@ -33,10 +33,8 @@ public class WorldManager {
     }
 
     public void renderTileStepSelection(VertexBuffer buf, Entity entity, Camera camera) {
-        if (entity instanceof GraphFunction graph) {
-            Vector vector = (Vector) graph.getEntryAt(camera.position);
-            Voxel.buildVertices(buf, vector, 1, 0xFF00B7FF);
-        }
+        if (entity instanceof GraphFunction graph)
+            Voxel.buildVertices(buf, graph.getGraphAt(camera.position), 1, 0xFF00B7FF);
     }
 
     public void renderSelection(VertexBuffer buf, Vector v) {

@@ -1,6 +1,7 @@
 package io.github.itzispyder.app;
 
 import io.github.itzispyder.Main;
+import io.github.itzispyder.math.Camera;
 
 import javax.swing.*;
 import java.awt.*;
@@ -120,6 +121,9 @@ public class Window extends JFrame {
 
         y += 20;
         g.drawString("Position: " + camera.position.toStringFloored(), x, y);
+
+        y += 20;
+        g.drawString("Velocity: " + Camera.getMovement().add(camera.velocity).toString(), x, y);
 
         y += 20;
         g.drawString("Entities: " + world.getEntities().size(), x, y);

@@ -13,6 +13,7 @@ public class Camera {
     public float focalLength;
     private int windowWidth, windowHeight;
     public Vector prevPosition, position, eyePosition;
+    public Vector velocity;
     public float prevPitch, prevYaw, pitch, yaw;
     public final Animator fovAnimator;
     public float height;
@@ -25,8 +26,9 @@ public class Camera {
         this.position = Vector.ZERO;
         this.eyePosition = position.add(0, height, 0);
         this.prevPosition = this.position;
-        this.fovAnimator = new PollingAnimator(150, () -> keyboard.accelerating);
+        this.fovAnimator = new PollingAnimator(150, () -> keyboard.accelerating || keyboard.fly);
         this.height = 1.6F;
+        this.velocity = Vector.ZERO;
     }
 
     public void updateBounds(Window window) {
@@ -43,22 +45,36 @@ public class Camera {
         pitch = Mth.clamp(pitch, -90, 90);
         yaw += mouse.pollDeltaX() * 0.15F;
 
-        Vector movement = getMovement();
-        position = position.add(Matrix.ROT_Y(yaw * Mth.TO_RAD).transform(movement.mul(2F)));
-        processFloorCollision(movement);
+        Vector movement = Matrix.ROT_Y(yaw * Mth.TO_RAD).transform(getMovement());
+        Vector predictPosition = position.add(movement).add(velocity);
+
+        float predictFloorY = world.tile.getHeightAt(predictPosition.x, predictPosition.z);
+        boolean onGround = position.y <= predictFloorY + 0.05F;
+
+        if (!keyboard.fly)
+            this.handleMovementCollisions(movement, onGround, predictFloorY);
+        else
+            position = predictPosition;
+
         eyePosition = position.add(0, height, 0);
     }
 
-    private void processFloorCollision(Vector movement) {
-        if (movement.x == 0 && movement.y == 0 && movement.z == 0)
-            return;
-        for (int i = 0; i < 10; i++) {
-            float yThis = position.y;
-            float yFloor = world.tile.getGraphPos(position).y;
-            if (yThis > yFloor)
-                position = position.add(0, -0.01, 0);
-            else if (yThis < yFloor && Math.abs(yThis - yFloor) < 0.5)
-                position = position.add(0, 0.01, 0);
+    private void handleMovementCollisions(Vector movement, boolean onGround, float predictFloorY) {
+        if (onGround) {
+            if (keyboard.ascend)
+                velocity = velocity.withY(0.25F);
+            else if (velocity.y < 0)
+                velocity = velocity.withY(0);
+        }
+        else {
+            velocity = velocity.withY(velocity.y - 0.067F);
+        }
+
+        if (predictFloorY - position.y < 0.6F) {
+            position = position.add(movement).add(velocity);
+
+            if (position.y < predictFloorY)
+                position = position.withY(predictFloorY);
         }
     }
 
@@ -98,7 +114,7 @@ public class Camera {
         return Matrix.rotationThirdPerson(this, 1).transform(new Vector(0, 0, 1));
     }
 
-    private static Vector getMovement() {
+    public static Vector getMovement() {
         Vector movement = Vector.ZERO;
         if (keyboard.forward) {
             movement = movement.add(0, 0, 1);
@@ -118,6 +134,6 @@ public class Camera {
         if (keyboard.descend) {
             movement = movement.add(0, -1, 0);
         }
-        return movement.mul(0.3F);
+        return movement.mul(keyboard.fly ? 1 : 0.3F);
     }
 }
