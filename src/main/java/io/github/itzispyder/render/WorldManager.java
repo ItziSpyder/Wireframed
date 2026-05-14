@@ -23,7 +23,7 @@ public class WorldManager {
 
     public void render(VertexBuffer buf, float tickDelta) {
         Entity entity;
-        for (int i = entities.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < entities.size(); i++) {
             entity = entities.get(i);
             entity.render(buf, tickDelta);
 

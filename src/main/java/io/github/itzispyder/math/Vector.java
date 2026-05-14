@@ -134,6 +134,21 @@ public class Vector {
         return new Vector(Math.ceil(x), Math.ceil(y), Math.ceil(z));
     }
 
+    public float dot(Vector v) {
+        return this.x * v.x + this.y * v.y + this.z * v.z;
+    }
+
+    // cross
+    // x,   y,   z
+    // v.x, v.y, v.z
+    public Vector cross(Vector v) {
+        return new Vector(
+                y * v.z - z * v.y,
+                z * v.x - x * v.z, // -(x * v.z - z * v.x)
+                x * v.y - y * v.x
+        );
+    }
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Vector v

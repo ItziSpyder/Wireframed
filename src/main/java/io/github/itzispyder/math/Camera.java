@@ -41,9 +41,9 @@ public class Camera {
         prevYaw = yaw;
         prevPosition = position;
 
-        pitch -= mouse.pollDeltaY() * 0.15F;
+        pitch -= mouse.pollDeltaY() * 0.10F;
         pitch = Mth.clamp(pitch, -90, 90);
-        yaw += mouse.pollDeltaX() * 0.15F;
+        yaw += mouse.pollDeltaX() * 0.10F;
 
         Vector movement = Matrix.ROT_Y(yaw * Mth.TO_RAD).transform(getMovement());
         Vector predictPosition = position.add(movement).add(velocity);

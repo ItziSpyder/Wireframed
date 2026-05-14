@@ -10,6 +10,7 @@ import static io.github.itzispyder.Main.world;
 
 public class SphereBullet extends Sphere {
 
+    private final int maxAge = 20 * 5; // 5 seconds
     private int age;
     public boolean gravity;
     public int color;
@@ -30,7 +31,7 @@ public class SphereBullet extends Sphere {
     @Override
     public void onTick() {
         super.onTick();
-        if (age++ >= 20) {
+        if (age++ >= maxAge) {
             world.removeEntity(this);
         }
 
@@ -41,21 +42,41 @@ public class SphereBullet extends Sphere {
     private void travel() {
         position = position.add(velocity);
         velocity = velocity.mul(0.99F).sub(0, gravity ? 0.001F : 0, 0);
-        rotation = rotationInitial.mul(Matrix.ROT_X((age / 20F) * Mth.PI_OVER_TWO));
+        rotation = rotationInitial.mul(Matrix.ROT_X((age / (float) maxAge) * Mth.PI_OVER_TWO));
         pollCollisionWithMissile();
+        pollCollisionWithTileMap();
     }
 
     private void pollCollisionWithMissile() {
         for (int i = world.getEntities().size() - 1; i >= 0; i--) {
             Entity entity = world.getEntities().get(i);
-            if (!(entity instanceof Missile missile))
-                continue;
-            if (!missile.isInRange(this, 2))
+            if (!entity.isInRange(this, 2))
                 continue;
 
-            world.removeEntity(missile);
-            world.removeEntity(this);
+            if (entity instanceof Missile target) {
+                world.removeEntity(target);
+                world.removeEntity(this);
+            }
         }
+    }
+
+    // future developers, the 1.5 represents 150% reflection
+    // 100% to stop the impact, and 50% to push back against the original velocity, creating a reflection
+    private void pollCollisionWithTileMap() {
+        Vector graph = world.tile.getGraphAt(position);
+        if (position.y > graph.y)
+            return;
+
+        Vector graphStepX = world.tile.getGraphAt(position.add(1, 0, 0)).sub(graph);
+        Vector graphStepZ = world.tile.getGraphAt(position.add(0, 0, 1)).sub(graph);
+        Vector intersectNormal = graphStepX.cross(graphStepZ).normalize().negate();
+
+        float dot = velocity.dot(intersectNormal);
+        if (dot >= 0) // perpendicular or away from surface
+            return;
+
+        velocity = velocity.sub(intersectNormal.mul(1.5F * dot));
+        position = graph;
     }
 
     @Override

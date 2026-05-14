@@ -28,7 +28,7 @@ public class Main {
         window.open();
         camera = new Camera();
         camera.updateBounds(window);
-        camera.position = Vector.ZERO;
+        camera.position = new Vector(0, 10, 0);
         vertexBuffer = new VertexBuffer(1024 * 1024);
         world = new WorldManager();
 
