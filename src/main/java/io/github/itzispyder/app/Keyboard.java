@@ -1,18 +1,21 @@
 package io.github.itzispyder.app;
 
+import io.github.itzispyder.render.GraphFunction;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.itzispyder.Main.mouse;
-import static io.github.itzispyder.Main.window;
+import static io.github.itzispyder.Gen.*;
+import static io.github.itzispyder.Main.*;
 
 public class Keyboard {
 
     private final List<Integer> pressedKeys;
     public boolean forward, backward, left, right, paused, ascend, descend, fly;
     public boolean accelerating, fullScreen;
+    public int mapToggleIndex;
 
     public Keyboard() {
         this.pressedKeys = new ArrayList<>();
@@ -45,6 +48,13 @@ public class Keyboard {
             accelerating = true;
         if (keycode == KeyEvent.VK_K)
             fly = !fly;
+        if (keycode == KeyEvent.VK_R) {
+            GraphFunction[] graphs = {GRAPH_PILLARS, GRAPH_WATER, GRAPH_TURF};
+            world.removeEntity(world.tile);
+            world.tile = graphs[++mapToggleIndex % graphs.length];
+            world.addEntity(world.tile);
+            camera.position = world.tile.getGraphAt(camera.position);
+        }
         if (keycode == KeyEvent.VK_F11) {
             fullScreen = !fullScreen;
             window.setExtendedState(fullScreen ? JFrame.MAXIMIZED_BOTH : JFrame.NORMAL);
