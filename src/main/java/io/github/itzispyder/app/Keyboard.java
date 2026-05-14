@@ -1,5 +1,6 @@
 package io.github.itzispyder.app;
 
+import io.github.itzispyder.math.Vector;
 import io.github.itzispyder.render.GraphFunction;
 
 import javax.swing.*;
@@ -46,8 +47,10 @@ public class Keyboard {
             paused = !paused;
         if (keycode == KeyEvent.VK_W)
             accelerating = true;
-        if (keycode == KeyEvent.VK_K)
+        if (keycode == KeyEvent.VK_K) {
             fly = !fly;
+            camera.velocity = Vector.ZERO;
+        }
         if (keycode == KeyEvent.VK_R) {
             GraphFunction[] graphs = {GRAPH_PILLARS, GRAPH_WATER, GRAPH_TURF};
             world.removeEntity(world.tile);
